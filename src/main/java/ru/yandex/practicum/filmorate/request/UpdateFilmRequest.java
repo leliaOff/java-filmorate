@@ -20,6 +20,8 @@ public class UpdateFilmRequest extends CreateFilmRequest {
             log.error("Не указан идентификатор фильма");
             throw new ValidationException("Необходимо указать идентификатор фильма");
         }
-        return super.parse();
+        Film film = super.parse();
+        film.setId(id.get());
+        return film;
     }
 }
