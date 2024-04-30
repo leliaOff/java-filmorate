@@ -14,6 +14,10 @@ import java.util.Optional;
 @Slf4j
 public class UpdateUserRequest extends CreateUserRequest {
     private Optional<Long> id;
+    public UpdateUserRequest() {
+        super();
+        id = Optional.empty();
+    }
 
     public User parse()
     {

@@ -20,6 +20,13 @@ public class CreateUserRequest {
     private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private transient final LocalDate maxDate = LocalDate.now();
 
+    public CreateUserRequest() {
+        email = Optional.empty();
+        login = Optional.empty();
+        name = Optional.empty();
+        birthday = Optional.empty();
+    }
+
     public User parse()
     {
         if (email.isEmpty()) {

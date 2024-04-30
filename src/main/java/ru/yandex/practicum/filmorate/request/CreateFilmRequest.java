@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
@@ -19,6 +20,13 @@ public class CreateFilmRequest {
 
     private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private transient final LocalDate minDate = LocalDate.of(1895, 12, 28);
+
+    public CreateFilmRequest() {
+        name = Optional.empty();
+        description = Optional.empty();
+        releaseDate = Optional.empty();
+        duration = Optional.empty();
+    }
 
     public Film parse()
     {
@@ -40,8 +48,8 @@ public class CreateFilmRequest {
         duration.ifPresent(film::setDuration);
         releaseDate.ifPresent(s -> film.setReleaseDate(LocalDate.parse(s, formatter)));
         if (film.getReleaseDate().isBefore(minDate)) {
-            log.error("Дата релиза фильма - до 28 декабря 1985 года");
-            throw new ValidationException("Дата релиза не может быть меньше, чем 28 декабря 1985 года");
+            log.error("Дата релиза фильма - до 28 декабря 1895 года");
+            throw new ValidationException("Дата релиза не может быть меньше, чем 28 декабря 1895 года");
         }
         return film;
     }

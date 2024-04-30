@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,11 @@ import java.util.Optional;
 @Slf4j
 public class UpdateFilmRequest extends CreateFilmRequest {
     private Optional<Long> id;
+
+    public UpdateFilmRequest() {
+        super();
+        id = Optional.empty();
+    }
 
     public Film parse()
     {
