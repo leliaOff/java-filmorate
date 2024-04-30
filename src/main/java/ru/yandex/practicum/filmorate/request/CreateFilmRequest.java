@@ -14,7 +14,7 @@ import java.util.Optional;
 public class CreateFilmRequest {
     private Optional<String> name;
     private Optional<String> description;
-    private Optional<String> registrationDate;
+    private Optional<String> releaseDate;
     private Optional<Long> duration;
 
     private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -37,8 +37,9 @@ public class CreateFilmRequest {
         Film film = new Film();
         film.setName(name.get());
         description.ifPresent(film::setDescription);
-        registrationDate.ifPresent(s -> film.setRegistrationDate(LocalDate.parse(s, formatter)));
-        if (film.getRegistrationDate().isBefore(minDate)) {
+        duration.ifPresent(film::setDuration);
+        releaseDate.ifPresent(s -> film.setReleaseDate(LocalDate.parse(s, formatter)));
+        if (film.getReleaseDate().isBefore(minDate)) {
             log.error("Дата релиза фильма - до 28 декабря 1985 года");
             throw new ValidationException("Дата релиза не может быть меньше, чем 28 декабря 1985 года");
         }
