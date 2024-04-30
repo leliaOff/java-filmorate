@@ -12,6 +12,7 @@ import java.util.*;
 
 @RestController
 @Slf4j
+@RequestMapping("/films")
 public class FilmController {
     private final HashMap<Long, Film> films = new HashMap<>();
     @GetMapping
