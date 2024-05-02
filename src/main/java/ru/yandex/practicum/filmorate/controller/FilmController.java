@@ -23,10 +23,10 @@ public class FilmController {
     }
     @PostMapping
     public Film create(@RequestBody CreateFilmRequest request) {
-        return this.filmService.create(request.parse());
+        return this.filmService.create(request.validate());
     }
     @PutMapping
     public Film update(@RequestBody UpdateFilmRequest request) {
-        return this.filmService.update(request.parse());
+        return this.filmService.update(request.validate());
     }
 }

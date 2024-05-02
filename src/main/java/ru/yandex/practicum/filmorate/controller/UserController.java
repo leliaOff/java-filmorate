@@ -25,10 +25,10 @@ public class UserController {
     }
     @PostMapping
     public User create(@RequestBody CreateUserRequest request) {
-        return this.userService.create(request.parse());
+        return this.userService.create(request.validate());
     }
     @PutMapping
     public User update(@RequestBody UpdateUserRequest request) {
-        return this.userService.update(request.parse());
+        return this.userService.update(request.validate());
     }
 }

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.validator.CreateUserValidator;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -18,24 +20,7 @@ public class CreateUserRequest {
     private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private transient final LocalDate maxDate = LocalDate.now();
 
-    public User parse()
-    {
-        if (email == null || email.isBlank()) {
-            log.error("Пустой адрес электронной почты");
-            throw new ValidationException("Необходимо указать адрес электронной почты");
-        }
-        if (email.indexOf('@') == -1) {
-            log.error("Не валидный адрес электронной почты");
-            throw new ValidationException("Необходимо указать валидный адрес электронной почты");
-        }
-        if (login == null) {
-            log.error("Пустой логин");
-            throw new ValidationException("Необходимо указать логин");
-        }
-        if (login.indexOf(' ') != -1) {
-            log.error("Не валидный логин");
-            throw new ValidationException("Логин не может содержать пробелы");
-        }
+    public User parse() {
         User user = new User();
         user.setEmail(email);
         user.setLogin(login);
@@ -43,9 +28,15 @@ public class CreateUserRequest {
         if (birthday != null) {
             user.setBirthday(LocalDate.parse(birthday, formatter));
         }
-        if (user.getBirthday().isAfter(maxDate)) {
-            log.error("Не валидная дата рождения");
-            throw new ValidationException("Дата рождения не может быть в будущем");
+        return user;
+    }
+
+    public User validate() {
+        User user = parse();
+        CreateUserValidator validator = new CreateUserValidator(user);
+        validator.validate();
+        if (!validator.isValid()) {
+            throw new ValidationException(String.join("\n", validator.getMessages()));
         }
         return user;
     }
