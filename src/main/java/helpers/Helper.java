@@ -2,7 +2,7 @@ package helpers;
 
 import java.util.HashMap;
 
-final public class Helper {
+public final class Helper {
     private Helper() {
     }
 
