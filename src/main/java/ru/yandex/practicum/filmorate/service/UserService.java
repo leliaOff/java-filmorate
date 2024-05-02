@@ -21,17 +21,17 @@ public class UserService {
     public User create(User user) {
         user.setId(Helper.nextId(users));
         users.put(user.getId(), user);
-        log.info(String.format("Пользователь добавлен (ID=%d)", user.getId()));
+        log.info("Пользователь добавлен (ID={})", user.getId());
         return user;
     }
 
     public User update(User user) {
         if (!users.containsKey(user.getId())) {
-            log.error(String.format("Пользователь не найден (ID=%d)", user.getId()));
+            log.error("Пользователь не найден (ID={})", user.getId());
             throw new NotFoundException("Не найден пользователь с указанным идентификатором");
         }
         users.put(user.getId(), user);
-        log.info(String.format("Пользователь изменен (ID=%d)", user.getId()));
+        log.info("Пользователь изменен (ID={})", user.getId());
         return user;
     }
 }

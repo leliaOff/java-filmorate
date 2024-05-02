@@ -20,17 +20,17 @@ public class FilmService {
     public Film create(Film film) {
         film.setId(Helper.nextId(films));
         films.put(film.getId(), film);
-        log.info(String.format("Фильм добавлен (ID=%d)", film.getId()));
+        log.info("Фильм добавлен (ID={})",  film.getId());
         return film;
     }
 
     public Film update(Film film) {
         if (!films.containsKey(film.getId())) {
-            log.error(String.format("Фильм не найден (ID=%d)", film.getId()));
+            log.error("Фильм не найден (ID={})", film.getId());
             throw new NotFoundException("Не найден фильм с указанным идентификатором");
         }
         films.put(film.getId(), film);
-        log.info(String.format("Фильм изменен (ID=%d)", film.getId()));
+        log.info("Фильм изменен (ID={})", film.getId());
         return film;
     }
 }
