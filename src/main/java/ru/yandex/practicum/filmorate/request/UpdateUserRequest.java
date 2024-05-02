@@ -4,29 +4,22 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
-import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
-
-import java.util.Optional;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
 public class UpdateUserRequest extends CreateUserRequest {
-    private Optional<Long> id;
-    public UpdateUserRequest() {
-        super();
-        id = Optional.empty();
-    }
+    private Long id;
 
     public User parse()
     {
-        if (id.isEmpty()) {
+        if (id == null) {
             log.error("Не указан идентификатор пользователя");
             throw new ValidationException("Необходимо указать идентификатор пользователя");
         }
         User user = super.parse();
-        user.setId(id.get());
+        user.setId(id);
         return user;
     }
 }

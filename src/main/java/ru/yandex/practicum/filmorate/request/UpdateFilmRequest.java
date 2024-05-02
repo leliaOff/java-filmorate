@@ -1,33 +1,25 @@
 package ru.yandex.practicum.filmorate.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
-import java.util.Optional;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Slf4j
 public class UpdateFilmRequest extends CreateFilmRequest {
-    private Optional<Long> id;
-
-    public UpdateFilmRequest() {
-        super();
-        id = Optional.empty();
-    }
+    private Long id;
 
     public Film parse()
     {
-        if (id.isEmpty()) {
+        if (id == null) {
             log.error("Не указан идентификатор фильма");
             throw new ValidationException("Необходимо указать идентификатор фильма");
         }
         Film film = super.parse();
-        film.setId(id.get());
+        film.setId(id);
         return film;
     }
 }
