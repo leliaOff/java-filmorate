@@ -4,7 +4,7 @@ import ru.yandex.practicum.filmorate.model.Validator;
 
 import java.util.ArrayList;
 
-abstract public class AbstractValidator {
+abstract class AbstractValidator {
     protected Validator validateResult;
 
     public AbstractValidator() {
@@ -19,5 +19,5 @@ abstract public class AbstractValidator {
         return validateResult.isValid();
     }
 
-    abstract public void validate();
+    abstract void validate();
 }
