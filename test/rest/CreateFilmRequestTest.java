@@ -10,7 +10,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class CreateFilmRequestTest {
-    private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     @Test
     void valid() {
         CreateFilmRequest request = new CreateFilmRequest();
@@ -29,6 +30,7 @@ public class CreateFilmRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void emptyName() {
         CreateFilmRequest request = new CreateFilmRequest();
@@ -44,6 +46,7 @@ public class CreateFilmRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void longDescription() {
         CreateFilmRequest request = new CreateFilmRequest();
@@ -58,6 +61,7 @@ public class CreateFilmRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void tooLongDescription() {
         CreateFilmRequest request = new CreateFilmRequest();
@@ -74,6 +78,7 @@ public class CreateFilmRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void zeroDuration() {
         CreateFilmRequest request = new CreateFilmRequest();
@@ -90,6 +95,7 @@ public class CreateFilmRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void negativeDuration() {
         CreateFilmRequest request = new CreateFilmRequest();
@@ -106,6 +112,7 @@ public class CreateFilmRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void minimumReleaseDate() {
         CreateFilmRequest request = new CreateFilmRequest();
@@ -120,6 +127,7 @@ public class CreateFilmRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void invalidReleaseDate() {
         CreateFilmRequest request = new CreateFilmRequest();

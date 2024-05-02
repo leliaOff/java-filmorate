@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Slf4j
 public class CreateUserValidator extends AbstractValidator {
     protected final User user;
-    private transient final LocalDate maxDate = LocalDate.now();
+    private final transient LocalDate maxDate = LocalDate.now();
 
     public CreateUserValidator(User user) {
         super();

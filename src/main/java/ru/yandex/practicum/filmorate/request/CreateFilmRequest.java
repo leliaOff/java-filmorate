@@ -17,7 +17,7 @@ public class CreateFilmRequest {
     private String releaseDate;
     private Long duration;
 
-    private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public Film parse() {
         Film film = new Film();

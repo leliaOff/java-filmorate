@@ -17,8 +17,8 @@ public class CreateUserRequest {
     private String name;
     private String birthday;
 
-    private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private transient final LocalDate maxDate = LocalDate.now();
+    private transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private transient LocalDate maxDate = LocalDate.now();
 
     public User parse() {
         User user = new User();

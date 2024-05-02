@@ -10,10 +10,9 @@ import ru.yandex.practicum.filmorate.request.UpdateUserRequest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 public class UpdateUserRequestTest {
-    private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Test
     void valid() {
         UpdateUserRequest request = new UpdateUserRequest();
