@@ -2,7 +2,10 @@ package helpers;
 
 import java.util.HashMap;
 
-public class Helper {
+final public class Helper {
+    private Helper() {
+    }
+
     public static <T> Long nextId(HashMap<Long, T> items) {
         long currentMaxId = items.keySet()
                 .stream()
