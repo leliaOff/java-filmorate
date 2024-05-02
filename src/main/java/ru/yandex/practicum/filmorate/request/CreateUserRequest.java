@@ -12,10 +12,11 @@ import java.time.format.DateTimeFormatter;
 @Data
 @Slf4j
 public class CreateUserRequest {
-    private String email;
-    private String login;
-    private String name;
-    private String birthday;
+    protected Long id;
+    protected String email;
+    protected String login;
+    protected String name;
+    protected LocalDate birthday;
 
     private transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private transient LocalDate maxDate = LocalDate.now();
@@ -25,9 +26,9 @@ public class CreateUserRequest {
         user.setEmail(email);
         user.setLogin(login);
         user.setName(name != null ? name : login);
-        if (birthday != null) {
-            user.setBirthday(LocalDate.parse(birthday, formatter));
-        }
+//        if (birthday != null) {
+//            user.setBirthday(LocalDate.parse(birthday, formatter));
+//        }
         return user;
     }
 
@@ -36,7 +37,7 @@ public class CreateUserRequest {
         CreateUserValidator validator = new CreateUserValidator(user);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(String.join("\n", validator.getMessages()));
+            throw new ValidationException(validator.getMessage());
         }
         return user;
     }

@@ -39,7 +39,7 @@ public class CreateFilmRequest {
         CreateFilmValidator validator = new CreateFilmValidator(film);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(String.join("\n", validator.getMessages()));
+            throw new ValidationException(validator.getMessage());
         }
         return film;
     }

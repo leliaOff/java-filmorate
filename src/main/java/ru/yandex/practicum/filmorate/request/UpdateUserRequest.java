@@ -11,8 +11,6 @@ import ru.yandex.practicum.filmorate.validator.UpdateUserValidator;
 @Data
 @Slf4j
 public class UpdateUserRequest extends CreateUserRequest {
-    private Long id;
-
     public User parse() {
         User user = super.parse();
         user.setId(id);
@@ -24,7 +22,7 @@ public class UpdateUserRequest extends CreateUserRequest {
         UpdateUserValidator validator = new UpdateUserValidator(user);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(String.join("\n", validator.getMessages()));
+            throw new ValidationException(validator.getMessage());
         }
         return user;
     }
