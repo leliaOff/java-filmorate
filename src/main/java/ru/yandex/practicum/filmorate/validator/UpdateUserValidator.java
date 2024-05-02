@@ -11,8 +11,8 @@ public class UpdateUserValidator extends CreateUserValidator {
 
     public void validate() {
         if (user.getId() == null) {
-            log.error("Не указан идентификатор фильма");
-            validateResult.add("Необходимо указать идентификатор фильма");
+            log.error("Не указан идентификатор пользователя");
+            validateResult.add("Необходимо указать идентификатор пользователя");
         }
         super.validate();
     }

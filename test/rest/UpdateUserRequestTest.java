@@ -17,11 +17,11 @@ public class UpdateUserRequestTest {
     @Test
     void valid() {
         UpdateUserRequest request = new UpdateUserRequest();
-        request.setId(Optional.of(1L));
-        request.setEmail(Optional.of("test@mail.ru"));
-        request.setLogin(Optional.of("login"));
-        request.setName(Optional.of("name"));
-        request.setBirthday(Optional.of("1990-09-25"));
+        request.setId(1L);
+        request.setEmail("test@mail.ru");
+        request.setLogin("login");
+        request.setName("name");
+        request.setBirthday("1990-09-25");
         User user = new User();
         user.setId(1L);
         user.setEmail("test@mail.ru");
@@ -29,7 +29,7 @@ public class UpdateUserRequestTest {
         user.setName("name");
         user.setBirthday(LocalDate.parse("1990-09-25", formatter));
         try {
-            Assertions.assertEquals(request.parse(), user);
+            Assertions.assertEquals(request.validate(), user);
         } catch (Throwable exception) {
             Assertions.fail();
         }
@@ -37,12 +37,12 @@ public class UpdateUserRequestTest {
     @Test
     void emptyId() {
         UpdateUserRequest request = new UpdateUserRequest();
-        request.setEmail(Optional.of("test@mail.ru"));
-        request.setLogin(Optional.of("login"));
-        request.setName(Optional.of("name"));
-        request.setBirthday(Optional.of("1990-09-25"));
+        request.setEmail("test@mail.ru");
+        request.setLogin("login");
+        request.setName("name");
+        request.setBirthday("1990-09-25");
         try {
-            request.parse();
+            request.validate();
             Assertions.fail();
         } catch (ValidationException exception) {
             Assertions.assertEquals("Необходимо указать идентификатор пользователя", exception.getMessage());

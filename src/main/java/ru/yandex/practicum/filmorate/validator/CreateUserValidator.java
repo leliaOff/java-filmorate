@@ -21,7 +21,7 @@ public class CreateUserValidator extends AbstractValidator {
             log.error("Пустой адрес электронной почты");
             validateResult.add("Необходимо указать адрес электронной почты");
         }
-        if (user.getEmail().indexOf('@') == -1) {
+        else if (user.getEmail().indexOf('@') == -1) {
             log.error("Не валидный адрес электронной почты");
             validateResult.add("Необходимо указать валидный адрес электронной почты");
         }
@@ -29,11 +29,11 @@ public class CreateUserValidator extends AbstractValidator {
             log.error("Пустой логин");
             validateResult.add("Необходимо указать логин");
         }
-        if (user.getLogin().indexOf(' ') != -1) {
+        else if (user.getLogin().indexOf(' ') != -1) {
             log.error("Не валидный логин");
             validateResult.add("Логин не может содержать пробелы");
         }
-        if (user.getBirthday().isAfter(maxDate)) {
+        if (user.getBirthday() != null && user.getBirthday().isAfter(maxDate)) {
             log.error("Не валидная дата рождения");
             validateResult.add("Дата рождения не может быть в будущем");
         }

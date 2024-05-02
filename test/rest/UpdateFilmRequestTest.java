@@ -9,18 +9,17 @@ import ru.yandex.practicum.filmorate.request.UpdateFilmRequest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 public class UpdateFilmRequestTest {
     private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Test
     void valid() {
         UpdateFilmRequest request = new UpdateFilmRequest();
-        request.setId(Optional.of(1L));
-        request.setName(Optional.of("name"));
-        request.setDescription(Optional.of("description"));
-        request.setReleaseDate(Optional.of("2013-01-01"));
-        request.setDuration(Optional.of(100L));
+        request.setId(1L);
+        request.setName("name");
+        request.setDescription("description");
+        request.setReleaseDate("2013-01-01");
+        request.setDuration(100L);
         Film film = new Film();
         film.setId(1L);
         film.setName("name");
@@ -28,7 +27,7 @@ public class UpdateFilmRequestTest {
         film.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
         film.setDuration(100L);
         try {
-            Assertions.assertEquals(request.parse(), film);
+            Assertions.assertEquals(request.validate(), film);
         } catch (Throwable exception) {
             Assertions.fail();
         }
@@ -36,13 +35,13 @@ public class UpdateFilmRequestTest {
     @Test
     void emptyId() {
         UpdateFilmRequest request = new UpdateFilmRequest();
-        request.setName(Optional.of("name"));
-        request.setDescription(Optional.of("description"));
-        request.setReleaseDate(Optional.of("2013-01-01"));
-        request.setDuration(Optional.of(100L));
+        request.setName("name");
+        request.setDescription("description");
+        request.setReleaseDate("2013-01-01");
+        request.setDuration(100L);
 
         try {
-            request.parse();
+            request.validate();
             Assertions.fail();
         } catch (ValidationException exception) {
             Assertions.assertEquals("Необходимо указать идентификатор фильма", exception.getMessage());

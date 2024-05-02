@@ -29,7 +29,7 @@ public class CreateFilmValidator extends AbstractValidator {
             log.error("Отрицательная или нулевая продолжительность фильма");
             validateResult.add("Продолжительность фильма должна быть положительным числом");
         }
-        if (film.getReleaseDate().isBefore(minDate)) {
+        if (film.getReleaseDate() != null && film.getReleaseDate().isBefore(minDate)) {
             log.error("Дата релиза фильма - до 28 декабря 1895 года");
             validateResult.add("Дата релиза не может быть меньше, чем 28 декабря 1895 года");
         }

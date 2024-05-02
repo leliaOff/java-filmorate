@@ -24,7 +24,7 @@ public class CreateUserRequest {
         User user = new User();
         user.setEmail(email);
         user.setLogin(login);
-        user.setName(name != null ? null : login);
+        user.setName(name != null ? name : login);
         if (birthday != null) {
             user.setBirthday(LocalDate.parse(birthday, formatter));
         }

@@ -8,36 +8,36 @@ import ru.yandex.practicum.filmorate.request.CreateUserRequest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 public class CreateUserRequestTest {
     private transient final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     @Test
     void valid() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setEmail(Optional.of("test@mail.ru"));
-        request.setLogin(Optional.of("login"));
-        request.setName(Optional.of("name"));
-        request.setBirthday(Optional.of("1990-09-25"));
+        request.setEmail("test@mail.ru");
+        request.setLogin("login");
+        request.setName("name");
+        request.setBirthday("1990-09-25");
         User user = new User();
         user.setEmail("test@mail.ru");
         user.setLogin("login");
         user.setName("name");
         user.setBirthday(LocalDate.parse("1990-09-25", formatter));
         try {
-            Assertions.assertEquals(request.parse(), user);
+            Assertions.assertEquals(request.validate(), user);
         } catch (Throwable exception) {
+            String message = exception.getMessage();
             Assertions.fail();
         }
     }
     @Test
     void emptyEmail() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setLogin(Optional.of("login"));
-        request.setName(Optional.of("name"));
-        request.setBirthday(Optional.of("1990-09-25"));
+        request.setLogin("login");
+        request.setName("name");
+        request.setBirthday("1990-09-25");
         try {
-            request.parse();
+            request.validate();
             Assertions.fail();
         } catch (ValidationException exception) {
             Assertions.assertEquals("Необходимо указать адрес электронной почты", exception.getMessage());
@@ -48,12 +48,12 @@ public class CreateUserRequestTest {
     @Test
     void invalidEmail() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setEmail(Optional.of("mail.ru"));
-        request.setLogin(Optional.of("login"));
-        request.setName(Optional.of("name"));
-        request.setBirthday(Optional.of("1990-09-25"));
+        request.setEmail("mail.ru");
+        request.setLogin("login");
+        request.setName("name");
+        request.setBirthday("1990-09-25");
         try {
-            request.parse();
+            request.validate();
             Assertions.fail();
         } catch (ValidationException exception) {
             Assertions.assertEquals("Необходимо указать валидный адрес электронной почты", exception.getMessage());
@@ -64,11 +64,11 @@ public class CreateUserRequestTest {
     @Test
     void emptyLogin() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setEmail(Optional.of("test@mail.ru"));
-        request.setName(Optional.of("name"));
-        request.setBirthday(Optional.of("1990-09-25"));
+        request.setEmail("test@mail.ru");
+        request.setName("name");
+        request.setBirthday("1990-09-25");
         try {
-            request.parse();
+            request.validate();
             Assertions.fail();
         } catch (ValidationException exception) {
             Assertions.assertEquals("Необходимо указать логин", exception.getMessage());
@@ -79,12 +79,12 @@ public class CreateUserRequestTest {
     @Test
     void invalidLoginLogin() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setEmail(Optional.of("test@mail.ru"));
-        request.setLogin(Optional.of("test login"));
-        request.setName(Optional.of("name"));
-        request.setBirthday(Optional.of("1990-09-25"));
+        request.setEmail("test@mail.ru");
+        request.setLogin("test login");
+        request.setName("name");
+        request.setBirthday("1990-09-25");
         try {
-            request.parse();
+            request.validate();
             Assertions.fail();
         } catch (ValidationException exception) {
             Assertions.assertEquals("Логин не может содержать пробелы", exception.getMessage());
@@ -95,16 +95,16 @@ public class CreateUserRequestTest {
     @Test
     void emptyName() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setEmail(Optional.of("test@mail.ru"));
-        request.setLogin(Optional.of("login"));
-        request.setBirthday(Optional.of("1990-09-25"));
+        request.setEmail("test@mail.ru");
+        request.setLogin("login");
+        request.setBirthday("1990-09-25");
         User user = new User();
         user.setEmail("test@mail.ru");
         user.setLogin("login");
         user.setName("login");
         user.setBirthday(LocalDate.parse("1990-09-25", formatter));
         try {
-            Assertions.assertEquals(request.parse(), user);
+            Assertions.assertEquals(request.validate(), user);
         } catch (Throwable exception) {
             Assertions.fail();
         }
@@ -112,12 +112,12 @@ public class CreateUserRequestTest {
     @Test
     void invalidBirthday() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setEmail(Optional.of("test@mail.ru"));
-        request.setLogin(Optional.of("login"));
-        request.setName(Optional.of("name"));
-        request.setBirthday(Optional.of("2090-09-25"));
+        request.setEmail("test@mail.ru");
+        request.setLogin("login");
+        request.setName("name");
+        request.setBirthday("2090-09-25");
         try {
-            request.parse();
+            request.validate();
             Assertions.fail();
         } catch (ValidationException exception) {
             Assertions.assertEquals("Дата рождения не может быть в будущем", exception.getMessage());
