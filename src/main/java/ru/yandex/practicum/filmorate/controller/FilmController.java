@@ -13,18 +13,22 @@ import java.util.*;
 @RequestMapping("/films")
 public class FilmController {
     private final FilmService filmService;
+
     @Autowired
     FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
+
     @GetMapping
     public Collection<Film> getAll() {
         return this.filmService.getAll();
     }
+
     @PostMapping
     public Film create(@RequestBody CreateFilmRequest request) {
         return this.filmService.create(request.validate());
     }
+
     @PutMapping
     public Film update(@RequestBody UpdateFilmRequest request) {
         return this.filmService.update(request.validate());

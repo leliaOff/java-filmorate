@@ -20,16 +20,14 @@ public class CreateUserValidator extends AbstractValidator {
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             log.error("Пустой адрес электронной почты");
             validateResult.add("Необходимо указать адрес электронной почты");
-        }
-        else if (user.getEmail().indexOf('@') == -1) {
+        } else if (user.getEmail().indexOf('@') == -1) {
             log.error("Не валидный адрес электронной почты");
             validateResult.add("Необходимо указать валидный адрес электронной почты");
         }
         if (user.getLogin() == null) {
             log.error("Пустой логин");
             validateResult.add("Необходимо указать логин");
-        }
-        else if (user.getLogin().indexOf(' ') != -1) {
+        } else if (user.getLogin().indexOf(' ') != -1) {
             log.error("Не валидный логин");
             validateResult.add("Логин не может содержать пробелы");
         }

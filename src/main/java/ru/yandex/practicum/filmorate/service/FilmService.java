@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
+
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -20,7 +21,7 @@ public class FilmService {
     public Film create(Film film) {
         film.setId(Helper.nextId(films));
         films.put(film.getId(), film);
-        log.info("Фильм добавлен (ID={})",  film.getId());
+        log.info("Фильм добавлен (ID={})", film.getId());
         return film;
     }
 

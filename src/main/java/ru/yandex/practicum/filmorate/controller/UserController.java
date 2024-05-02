@@ -15,18 +15,22 @@ import java.util.Collection;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+
     @Autowired
     UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping
     public Collection<User> getAll() {
         return this.userService.getAll();
     }
+
     @PostMapping
     public User create(@RequestBody CreateUserRequest request) {
         return this.userService.create(request.validate());
     }
+
     @PutMapping
     public User update(@RequestBody UpdateUserRequest request) {
         return this.userService.update(request.validate());
