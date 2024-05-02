@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Slf4j
 public class CreateFilmValidator extends AbstractValidator {
     protected final Film film;
-    protected transient final LocalDate minDate = LocalDate.of(1895, 12, 28);
+    protected transient LocalDate minDate = LocalDate.of(1895, 12, 28);
 
     public CreateFilmValidator(Film film) {
         super();
