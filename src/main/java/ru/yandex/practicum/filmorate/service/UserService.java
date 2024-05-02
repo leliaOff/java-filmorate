@@ -20,6 +20,7 @@ public class UserService {
 
     public User create(User user) {
         user.setId(Helper.nextId(users));
+        user.setName(user.getName() != null ? user.getName() : user.getLogin());
         users.put(user.getId(), user);
         log.info("Пользователь добавлен (ID={})", user.getId());
         return user;
@@ -30,6 +31,7 @@ public class UserService {
             log.error("Пользователь не найден (ID={})", user.getId());
             throw new NotFoundException("Не найден пользователь с указанным идентификатором");
         }
+        user.setName(user.getName() != null ? user.getName() : user.getLogin());
         users.put(user.getId(), user);
         log.info("Пользователь изменен (ID={})", user.getId());
         return user;
