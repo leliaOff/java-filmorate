@@ -3,9 +3,7 @@ package rest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
-import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.request.UpdateFilmRequest;
 import ru.yandex.practicum.filmorate.request.UpdateUserRequest;
 
 import java.time.LocalDate;
