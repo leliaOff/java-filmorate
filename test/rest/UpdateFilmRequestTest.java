@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 public class UpdateFilmRequestTest {
     private final transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     @Test
     void valid() {
         UpdateFilmRequest request = new UpdateFilmRequest();
@@ -32,6 +33,7 @@ public class UpdateFilmRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void emptyId() {
         UpdateFilmRequest request = new UpdateFilmRequest();

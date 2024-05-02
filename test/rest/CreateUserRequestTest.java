@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class CreateUserRequestTest {
     private final transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     @Test
     void valid() {
         CreateUserRequest request = new CreateUserRequest();
@@ -30,6 +31,7 @@ public class CreateUserRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void emptyEmail() {
         CreateUserRequest request = new CreateUserRequest();
@@ -45,6 +47,7 @@ public class CreateUserRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void invalidEmail() {
         CreateUserRequest request = new CreateUserRequest();
@@ -61,6 +64,7 @@ public class CreateUserRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void emptyLogin() {
         CreateUserRequest request = new CreateUserRequest();
@@ -76,6 +80,7 @@ public class CreateUserRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void invalidLoginLogin() {
         CreateUserRequest request = new CreateUserRequest();
@@ -92,6 +97,7 @@ public class CreateUserRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void emptyName() {
         CreateUserRequest request = new CreateUserRequest();
@@ -109,6 +115,7 @@ public class CreateUserRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void invalidBirthday() {
         CreateUserRequest request = new CreateUserRequest();

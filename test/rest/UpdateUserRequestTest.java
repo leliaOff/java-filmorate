@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 public class UpdateUserRequestTest {
     private final transient DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     @Test
     void valid() {
         UpdateUserRequest request = new UpdateUserRequest();
@@ -33,6 +34,7 @@ public class UpdateUserRequestTest {
             Assertions.fail();
         }
     }
+
     @Test
     void emptyId() {
         UpdateUserRequest request = new UpdateUserRequest();
