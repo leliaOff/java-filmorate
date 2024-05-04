@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -32,13 +33,30 @@ public class UserService {
     }
 
     public User update(User user) {
-        try {
-            user = this.storage.update(user);
-            log.info("Пользователь изменен (ID={})", user.getId());
-            return user;
-        } catch (NotFoundException e) {
-            log.error("Пользователь не найден (ID={})", user.getId());
-            throw new NotFoundException(e.getMessage());
-        }
+        Long id = user.getId();
+        user = storage.update(id, user).orElseThrow(() -> {
+            log.error("Пользователь не найден (ID={})", id);
+            return new NotFoundException("Пользователь не найден");
+        });
+        log.info("Пользователь изменен (ID={})", id);
+        return user;
+    }
+
+    public User subscribe(Long userId, Long userFriendId) {
+        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        return storage.subscribe(user, friend);
+    }
+
+    public User unsubscribe(Long userId, Long userFriendId) {
+        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        return storage.unsubscribe(user, friend);
+    }
+
+    public Set<User> getMutualFriends(Long userId, Long userFriendId) {
+        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        return storage.getMutualFriends(user, friend);
     }
 }
