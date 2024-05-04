@@ -11,7 +11,6 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -29,9 +28,11 @@ public class FilmService {
     public Collection<Film> getAll() {
         return storage.getAll();
     }
+
     public Collection<Film> getBestFilms() {
         return storage.getBestFilms();
     }
+
     public Film find(Long id) {
         return storage.find(id).orElseThrow(() -> new NotFoundException("Фильм не найден"));
     }
