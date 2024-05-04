@@ -32,6 +32,9 @@ public class FilmService {
     public Collection<Film> getBestFilms() {
         return storage.getBestFilms();
     }
+    public Film find(Long id) {
+        return storage.find(id).orElseThrow(() -> new NotFoundException("Фильм не найден"));
+    }
 
     public Film create(Film film) {
         film = storage.create(film);
