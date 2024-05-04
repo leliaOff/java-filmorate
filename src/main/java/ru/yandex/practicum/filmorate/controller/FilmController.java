@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.validator.CreateFilmValidator;
 import ru.yandex.practicum.filmorate.validator.UpdateFilmValidator;
 
@@ -13,16 +13,16 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-    private final InMemoryFilmStorage storage;
+    private final FilmService filmService;
 
     @Autowired
-    FilmController(InMemoryFilmStorage storage) {
-        this.storage = storage;
+    FilmController(FilmService filmService) {
+        this.filmService = filmService;
     }
 
     @GetMapping
     public Collection<Film> getAll() {
-        return this.storage.getAll();
+        return this.filmService.getAll();
     }
 
     @PostMapping
@@ -32,7 +32,7 @@ public class FilmController {
         if (!validator.isValid()) {
             throw new ValidationException(validator.getMessage());
         }
-        return this.storage.create(film);
+        return this.filmService.create(film);
     }
 
     @PutMapping
@@ -42,6 +42,6 @@ public class FilmController {
         if (!validator.isValid()) {
             throw new ValidationException(validator.getMessage());
         }
-        return this.storage.update(film);
+        return this.filmService.update(film);
     }
 }

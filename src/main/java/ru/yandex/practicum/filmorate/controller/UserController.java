@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
+import ru.yandex.practicum.filmorate.service.UserService;
 import ru.yandex.practicum.filmorate.validator.CreateUserValidator;
 import ru.yandex.practicum.filmorate.validator.UpdateUserValidator;
 
@@ -15,16 +15,16 @@ import java.util.Collection;
 @Slf4j
 @RequestMapping("/users")
 public class UserController {
-    private final InMemoryUserStorage storage;
+    private final UserService userService;
 
     @Autowired
-    UserController(InMemoryUserStorage storage) {
-        this.storage = storage;
+    UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public Collection<User> getAll() {
-        return this.storage.getAll();
+        return this.userService.getAll();
     }
 
     @PostMapping
@@ -34,7 +34,7 @@ public class UserController {
         if (!validator.isValid()) {
             throw new ValidationException(validator.getMessage());
         }
-        return this.storage.create(user);
+        return this.userService.create(user);
     }
 
     @PutMapping
@@ -44,6 +44,6 @@ public class UserController {
         if (!validator.isValid()) {
             throw new ValidationException(validator.getMessage());
         }
-        return this.storage.update(user);
+        return this.userService.update(user);
     }
 }
