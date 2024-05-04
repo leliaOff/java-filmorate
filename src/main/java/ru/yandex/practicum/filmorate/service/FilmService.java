@@ -1,28 +1,36 @@
 package ru.yandex.practicum.filmorate.service;
 
-import helpers.Helper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 @Slf4j
 @Service
 public class FilmService {
     private final FilmStorage storage;
+    private final UserStorage userStorage;
     private final HashMap<Long, Film> films = new HashMap<>();
+
     @Autowired
-    FilmService(FilmStorage storage) {
+    FilmService(FilmStorage storage, UserStorage userStorage) {
         this.storage = storage;
+        this.userStorage = userStorage;
     }
 
     public Collection<Film> getAll() {
         return storage.getAll();
+    }
+    public Collection<Film> getBestFilms() {
+        return storage.getBestFilms();
     }
 
     public Film create(Film film) {
@@ -32,13 +40,24 @@ public class FilmService {
     }
 
     public Film update(Film film) {
-        try {
-            film = storage.update(film);
-            log.info("Фильм изменен (ID={})", film.getId());
-            return film;
-        } catch (NotFoundException e) {
-            log.error("Фильм не найден (ID={})", film.getId());
-            throw new NotFoundException(e.getMessage());
-        }
+        Long id = film.getId();
+        film = storage.update(id, film).orElseThrow(() -> {
+            log.error("Фильм не найден (ID={})", id);
+            return new NotFoundException("Фильм не найден");
+        });
+        log.info("Фильм изменен (ID={})", id);
+        return film;
+    }
+
+    public Film vote(Long filmId, Long userId) {
+        User user = userStorage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        Film film = storage.find(filmId).orElseThrow(() -> new NotFoundException("Фильм не найден"));
+        return storage.vote(film, user);
+    }
+
+    public Film unvote(Long filmId, Long userId) {
+        User user = userStorage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        Film film = storage.find(filmId).orElseThrow(() -> new NotFoundException("Фильм не найден"));
+        return storage.unvote(film, user);
     }
 }
