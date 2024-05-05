@@ -32,7 +32,7 @@ public class UserController {
         CreateUserValidator validator = new CreateUserValidator(user);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(validator.getMessage());
+            throw new ValidationException("Невалидные параметры", validator.getMessages());
         }
         return this.userService.create(user);
     }
@@ -42,7 +42,7 @@ public class UserController {
         UpdateUserValidator validator = new UpdateUserValidator(user);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(validator.getMessage());
+            throw new ValidationException("Невалидные параметры", validator.getMessages());
         }
         return this.userService.update(user);
     }

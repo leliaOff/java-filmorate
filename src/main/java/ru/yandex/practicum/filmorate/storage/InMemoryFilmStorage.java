@@ -14,13 +14,6 @@ import java.util.stream.Collectors;
 public class InMemoryFilmStorage implements FilmStorage {
     private final HashMap<Long, Film> films = new HashMap<>();
 
-    public Optional<Film> find(Long id) {
-        return this.films.values()
-                .stream()
-                .filter(film -> film.getId().equals(id))
-                .findFirst();
-    }
-
     public Collection<Film> getAll() {
         return films.values();
     }
@@ -35,6 +28,13 @@ public class InMemoryFilmStorage implements FilmStorage {
                 })
                 .limit(count)
                 .collect(Collectors.toSet());
+    }
+
+    public Optional<Film> find(Long id) {
+        return this.films.values()
+                .stream()
+                .filter(film -> film.getId().equals(id))
+                .findFirst();
     }
 
     public Film create(Film film) {

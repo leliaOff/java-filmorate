@@ -15,10 +15,6 @@ abstract class AbstractValidator {
         return validateResult.getMessages();
     }
 
-    public String getMessage() {
-        return String.join("\n", getMessages().stream().toList());
-    }
-
     public boolean isValid() {
         return validateResult.isValid();
     }

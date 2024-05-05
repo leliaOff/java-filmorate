@@ -42,7 +42,7 @@ public class FilmController {
         CreateFilmValidator validator = new CreateFilmValidator(film);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(validator.getMessage());
+            throw new ValidationException("Невалидные параметры", validator.getMessages());
         }
         return this.filmService.create(film);
     }
@@ -52,7 +52,7 @@ public class FilmController {
         UpdateFilmValidator validator = new UpdateFilmValidator(film);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(validator.getMessage());
+            throw new ValidationException("Невалидные параметры", validator.getMessages());
         }
         return this.filmService.update(film);
     }
