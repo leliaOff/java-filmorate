@@ -9,7 +9,6 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Set;
 
 @Service
 @Slf4j
@@ -58,9 +57,14 @@ public class UserService {
         return storage.unsubscribe(user, friend);
     }
 
-    public Set<User> getMutualFriends(Long userId, Long userFriendId) {
+    public Collection<User> getFriends(Long userId) {
+        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        return storage.getFriends(user);
+    }
+
+    public Collection<User> getCommonFriends(Long userId, Long userFriendId) {
         User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
         User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        return storage.getMutualFriends(user, friend);
+        return storage.getCommonFriends(user, friend);
     }
 }

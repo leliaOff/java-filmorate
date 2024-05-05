@@ -25,7 +25,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return films.values();
     }
 
-    public Collection<Film> getBestFilms() {
+    public Collection<Film> getPopular(int count) {
         return films.values().stream()
                 .sorted((a, b) -> {
                     if (a.getVotes().size() == b.getVotes().size()) {
@@ -33,7 +33,7 @@ public class InMemoryFilmStorage implements FilmStorage {
                     }
                     return a.getVotes().size() > b.getVotes().size() ? 1 : -1;
                 })
-                .limit(10)
+                .limit(count)
                 .collect(Collectors.toSet());
     }
 

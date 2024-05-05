@@ -46,4 +46,38 @@ public class UserController {
         }
         return this.userService.update(user);
     }
+
+    @GetMapping("/{id}")
+    public User get(@PathVariable long id) {
+        return this.userService.find(id);
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public User subscribe(
+            @PathVariable long id,
+            @PathVariable long friendId
+    ) {
+        return this.userService.subscribe(id, friendId);
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public User unsubscribe(
+            @PathVariable long id,
+            @PathVariable long friendId
+    ) {
+        return this.userService.unsubscribe(id, friendId);
+    }
+
+    @GetMapping("/{id}/friends")
+    public Collection<User> getFriends(@PathVariable long id) {
+        return this.userService.getFriends(id);
+    }
+
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public Collection<User> getCommonFriends(
+            @PathVariable long id,
+            @PathVariable long otherId
+    ) {
+        return this.userService.getCommonFriends(id, otherId);
+    }
 }

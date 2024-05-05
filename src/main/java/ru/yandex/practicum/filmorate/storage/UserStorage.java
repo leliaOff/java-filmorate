@@ -4,7 +4,6 @@ import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 public interface UserStorage {
     Collection<User> getAll();
@@ -19,5 +18,7 @@ public interface UserStorage {
 
     User unsubscribe(User user, User friend);
 
-    Set<User> getMutualFriends(User user, User friend);
+    Collection<User> getFriends(User user);
+
+    Collection<User> getCommonFriends(User user, User friend);
 }

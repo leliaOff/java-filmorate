@@ -25,6 +25,18 @@ public class FilmController {
         return this.filmService.getAll();
     }
 
+    @GetMapping("/popular")
+    public Collection<Film> getPopular(
+            @RequestParam(defaultValue = "10") Integer count
+    ) {
+        return this.filmService.getPopular(count);
+    }
+
+    @GetMapping("/{id}")
+    public Film get(@PathVariable long id) {
+        return this.filmService.find(id);
+    }
+
     @PostMapping
     public Film create(@RequestBody Film film) {
         CreateFilmValidator validator = new CreateFilmValidator(film);
@@ -43,5 +55,21 @@ public class FilmController {
             throw new ValidationException(validator.getMessage());
         }
         return this.filmService.update(film);
+    }
+
+    @PutMapping("/{id}/like/{userId}")
+    public Film vote(
+            @PathVariable long id,
+            @PathVariable long userId
+    ) {
+        return this.filmService.vote(id, userId);
+    }
+
+    @DeleteMapping("/{id}/like/{userId}")
+    public Film unvote(
+            @PathVariable long id,
+            @PathVariable long userId
+    ) {
+        return this.filmService.unvote(id, userId);
     }
 }

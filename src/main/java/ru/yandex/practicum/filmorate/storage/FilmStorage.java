@@ -10,7 +10,7 @@ public interface FilmStorage {
 
     Collection<Film> getAll();
 
-    Collection<Film> getBestFilms();
+    Collection<Film> getPopular(int count);
 
     Optional<Film> find(Long id);
 

@@ -7,7 +7,6 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -51,7 +50,15 @@ public class InMemoryUserStorage implements UserStorage {
         return user;
     }
 
-    public Set<User> getMutualFriends(User user, User friend) {
+    public Collection<User> getFriends(User user) {
+        return user.getFriends().stream()
+                .map(this::find)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+    }
+
+    public Collection<User> getCommonFriends(User user, User friend) {
         return user.getFriends().stream()
                 .filter(id -> friend.getFriends().contains(id))
                 .map(this::find)

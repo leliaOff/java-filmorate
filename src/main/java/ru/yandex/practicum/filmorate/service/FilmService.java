@@ -29,8 +29,8 @@ public class FilmService {
         return storage.getAll();
     }
 
-    public Collection<Film> getBestFilms() {
-        return storage.getBestFilms();
+    public Collection<Film> getPopular(int count) {
+        return storage.getPopular(count);
     }
 
     public Film find(Long id) {
