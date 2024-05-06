@@ -7,6 +7,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -42,11 +43,13 @@ public class InMemoryUserStorage implements UserStorage {
 
     public User subscribe(User user, User friend) {
         user.getFriends().add(friend.getId());
+        friend.getFriends().add(user.getId());
         return user;
     }
 
     public User unsubscribe(User user, User friend) {
         user.getFriends().remove(friend.getId());
+        friend.getFriends().remove(user.getId());
         return user;
     }
 

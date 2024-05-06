@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
@@ -24,10 +24,10 @@ public class InMemoryFilmStorage implements FilmStorage {
                     if (a.getVotes().size() == b.getVotes().size()) {
                         return 0;
                     }
-                    return a.getVotes().size() > b.getVotes().size() ? 1 : -1;
+                    return a.getVotes().size() > b.getVotes().size() ? -1 : 1;
                 })
                 .limit(count)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public Optional<Film> find(Long id) {
