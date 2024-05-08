@@ -22,7 +22,17 @@ public class FilmController {
 
     @GetMapping
     public Collection<Film> getAll() {
-        return this.filmService.getAll();
+        return filmService.getAll();
+    }
+
+    @GetMapping("/popular")
+    public Collection<Film> getPopular(@RequestParam(defaultValue = "10") Integer count) {
+        return filmService.getPopular(count);
+    }
+
+    @GetMapping("/{id}")
+    public Film get(@PathVariable long id) {
+        return filmService.find(id);
     }
 
     @PostMapping
@@ -30,9 +40,9 @@ public class FilmController {
         CreateFilmValidator validator = new CreateFilmValidator(film);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(validator.getMessage());
+            throw new ValidationException("Невалидные параметры", validator.getMessages());
         }
-        return this.filmService.create(film);
+        return filmService.create(film);
     }
 
     @PutMapping
@@ -40,8 +50,18 @@ public class FilmController {
         UpdateFilmValidator validator = new UpdateFilmValidator(film);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(validator.getMessage());
+            throw new ValidationException("Невалидные параметры", validator.getMessages());
         }
-        return this.filmService.update(film);
+        return filmService.update(film);
+    }
+
+    @PutMapping("/{id}/like/{userId}")
+    public Film vote(@PathVariable long id, @PathVariable long userId) {
+        return filmService.vote(id, userId);
+    }
+
+    @DeleteMapping("/{id}/like/{userId}")
+    public Film unvote(@PathVariable long id, @PathVariable long userId) {
+        return filmService.unvote(id, userId);
     }
 }

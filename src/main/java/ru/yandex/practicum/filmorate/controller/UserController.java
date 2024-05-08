@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping
     public Collection<User> getAll() {
-        return this.userService.getAll();
+        return userService.getAll();
     }
 
     @PostMapping
@@ -32,9 +32,9 @@ public class UserController {
         CreateUserValidator validator = new CreateUserValidator(user);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(validator.getMessage());
+            throw new ValidationException("Невалидные параметры", validator.getMessages());
         }
-        return this.userService.create(user);
+        return userService.create(user);
     }
 
     @PutMapping
@@ -42,8 +42,33 @@ public class UserController {
         UpdateUserValidator validator = new UpdateUserValidator(user);
         validator.validate();
         if (!validator.isValid()) {
-            throw new ValidationException(validator.getMessage());
+            throw new ValidationException("Невалидные параметры", validator.getMessages());
         }
-        return this.userService.update(user);
+        return userService.update(user);
+    }
+
+    @GetMapping("/{id}")
+    public User get(@PathVariable long id) {
+        return userService.find(id);
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public User subscribe(@PathVariable long id, @PathVariable long friendId) {
+        return userService.subscribe(id, friendId);
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public User unsubscribe(@PathVariable long id, @PathVariable long friendId) {
+        return userService.unsubscribe(id, friendId);
+    }
+
+    @GetMapping("/{id}/friends")
+    public Collection<User> getFriends(@PathVariable long id) {
+        return userService.getFriends(id);
+    }
+
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public Collection<User> getCommonFriends(@PathVariable long id, @PathVariable long otherId) {
+        return userService.getCommonFriends(id, otherId);
     }
 }

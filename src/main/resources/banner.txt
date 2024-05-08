@@ -1,0 +1,7 @@
+${AnsiColor.MAGENTA}███████╗${AnsiColor.DEFAULT}██╗██╗░░░░░███╗░░░███╗░${AnsiColor.MAGENTA}█████╗${AnsiColor.DEFAULT}░██████╗░░█████╗░████████╗███████╗
+${AnsiColor.MAGENTA}██╔════╝${AnsiColor.DEFAULT}██║██║░░░░░████╗░████║${AnsiColor.MAGENTA}██╔══██╗${AnsiColor.DEFAULT}██╔══██╗██╔══██╗╚══██╔══╝██╔════╝
+${AnsiColor.MAGENTA}█████╗${AnsiColor.DEFAULT}░░██║██║░░░░░██╔████╔██║${AnsiColor.MAGENTA}██║░░██║${AnsiColor.DEFAULT}██████╔╝███████║░░░██║░░░█████╗░░
+${AnsiColor.MAGENTA}██╔══╝${AnsiColor.DEFAULT}░░██║██║░░░░░██║╚██╔╝██║${AnsiColor.MAGENTA}██║░░██║${AnsiColor.DEFAULT}██╔══██╗██╔══██║░░░██║░░░██╔══╝░░
+${AnsiColor.MAGENTA}██║${AnsiColor.DEFAULT}░░░░░██║███████╗██║░╚═╝░██║${AnsiColor.MAGENTA}╚█████╔╝${AnsiColor.DEFAULT}██║░░██║██║░░██║░░░██║░░░███████╗
+${AnsiColor.MAGENTA}╚═╝${AnsiColor.DEFAULT}░░░░░╚═╝╚══════╝╚═╝░░░░░╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝${AnsiColor.DEFAULT}░░░╚═╝░░░╚══════╝
+
