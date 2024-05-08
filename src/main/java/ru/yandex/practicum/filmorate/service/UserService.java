@@ -8,13 +8,11 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 @Service
 @Slf4j
 public class UserService {
     private final UserStorage storage;
-    private final HashMap<Long, User> users = new HashMap<>();
 
     @Autowired
     UserService(UserStorage storage) {

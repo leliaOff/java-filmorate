@@ -10,14 +10,12 @@ import ru.yandex.practicum.filmorate.storage.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 @Slf4j
 @Service
 public class FilmService {
     private final FilmStorage storage;
     private final UserStorage userStorage;
-    private final HashMap<Long, Film> films = new HashMap<>();
 
     @Autowired
     FilmService(FilmStorage storage, UserStorage userStorage) {
