@@ -21,10 +21,10 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Collection<Film> getPopular(int count) {
         return films.values().stream()
                 .sorted((a, b) -> {
-                    if (a.getVotes().size() == b.getVotes().size()) {
+                    if (a.getUserRatings().size() == b.getUserRatings().size()) {
                         return 0;
                     }
-                    return a.getVotes().size() > b.getVotes().size() ? -1 : 1;
+                    return a.getUserRatings().size() > b.getUserRatings().size() ? -1 : 1;
                 })
                 .limit(count)
                 .collect(Collectors.toList());
@@ -52,12 +52,12 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     public Film vote(Film film, User user) {
-        film.getVotes().add(user.getId());
+        film.getUserRatings().add(user.getId());
         return film;
     }
 
     public Film unvote(Film film, User user) {
-        film.getVotes().remove(user.getId());
+        film.getUserRatings().remove(user.getId());
         return film;
     }
 }
