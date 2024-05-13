@@ -41,19 +41,19 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     public User subscribe(User user, User friend) {
-        user.getFriends().add(friend.getId());
-        friend.getFriends().add(user.getId());
+        user.getFollows().add(friend.getId());
+        friend.getFollows().add(user.getId());
         return user;
     }
 
     public User unsubscribe(User user, User friend) {
-        user.getFriends().remove(friend.getId());
-        friend.getFriends().remove(user.getId());
+        user.getFollows().remove(friend.getId());
+        friend.getFollows().remove(user.getId());
         return user;
     }
 
     public Collection<User> getFriends(User user) {
-        return user.getFriends().stream()
+        return user.getFollows().stream()
                 .map(this::find)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -61,8 +61,8 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     public Collection<User> getCommonFriends(User user, User friend) {
-        return user.getFriends().stream()
-                .filter(id -> friend.getFriends().contains(id))
+        return user.getFollows().stream()
+                .filter(id -> friend.getFollows().contains(id))
                 .map(this::find)
                 .filter(Optional::isPresent)
                 .map(Optional::get)

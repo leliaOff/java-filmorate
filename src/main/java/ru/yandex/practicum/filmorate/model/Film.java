@@ -16,5 +16,7 @@ public class Film {
     private String description;
     private LocalDate releaseDate;
     private Long duration;
-    private Set<Long> votes = new HashSet<>();
+    private Long genreId;
+    private Long ratingId;
+    private Set<Long> userRatings = new HashSet<>();
 }
