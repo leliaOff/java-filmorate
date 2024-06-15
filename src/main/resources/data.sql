@@ -1,3 +1,8 @@
+INSERT INTO users (email, login, name, birthday)
+VALUES ('polukova@mail.ru', 'polukova', 'Полукова Елена', '1990-09-25'),
+       ('brykova@mail.ru', 'brykova', 'Брыкова Светлана', '1961-08-08'),
+       ('ivanov@mail.ru', 'ivanov', 'Иванов Семён', '2010-06-04');
+
 INSERT INTO genres (name)
 VALUES ('Боевик'),
        ('Вестерн'),
