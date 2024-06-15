@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class UserRowMapper implements RowMapper<User> {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     public User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
