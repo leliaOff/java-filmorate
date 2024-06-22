@@ -35,7 +35,7 @@ public class BaseRepository<T> {
      *
      * @param query  Запрос
      * @param params Параметры запроса
-     * @return
+     * @return       Строка
      */
     protected Optional<T> find(String query, Object... params) {
         try {
@@ -46,6 +46,21 @@ public class BaseRepository<T> {
             return results.stream().findFirst();
         } catch (EmptyResultDataAccessException ignored) {
             return Optional.empty();
+        }
+    }
+
+    /**
+     * Возвращает количество
+     *
+     * @param query  Запрос
+     * @param params Параметры запроса
+     * @return       Строка
+     */
+    protected Integer count(String query, Object... params) {
+        try {
+            return  jdbc.queryForObject(query, Integer.class, params);
+        } catch (EmptyResultDataAccessException ignored) {
+            return 0;
         }
     }
 

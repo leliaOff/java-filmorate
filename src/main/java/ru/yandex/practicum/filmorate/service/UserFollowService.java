@@ -104,6 +104,42 @@ public class UserFollowService {
     }
 
     /**
+     * Отписаться/оставить в подписчиках
+     *
+     * @param userId       ИД пользователя
+     * @param userFriendId ИД подписки/друга
+     */
+    public void unsubscribe(Long userId, Long userFriendId) {
+        if (Objects.equals(userId, userFriendId)) {
+            log.error("Не удалось выполнить запрос: нельзя удалить из друзей самого себя");
+            throw new InternalServerException("Не удалось выполнить запрос: нельзя удалить из друзей самого себя");
+        }
+        User user = userStorage
+                .find(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        User friend = userStorage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        if (isFriend(user, friend)) {
+            if (storage.isInitiator(userId, userFriendId)) {
+                storage.unsubscribe(userId, userFriendId);
+                storage.subscribe(userFriendId, userId);
+            } else {
+                storage.leaveSubscription(userFriendId, userId);
+            }
+            return;
+        }
+
+        if (isSubscription(user, friend)) {
+            storage.unsubscribe(userId, userFriendId);
+            return;
+        }
+
+        log.error("Не удалось выполнить запрос: не является другом или подпиской");
+        throw new InternalServerException("Не удалось выполнить запрос: не является другом или подпиской");
+    }
+
+    /**
      * Являются ли пользователи друзьями
      *
      * @param user       Пользователь
@@ -127,18 +163,7 @@ public class UserFollowService {
         return subscriptions.stream().anyMatch(userDto -> userDto.getId().equals(friendUser.getId()));
     }
 
-//
-//    public UserDto unsubscribe(Long userId, Long userFriendId) {
-//        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-//        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-//        user = storage.unsubscribe(user, friend).orElseThrow(() -> {
-//            log.error("Не удалось выполнить запрос на удаление из друзей");
-//            return new NotFoundException("Не удалось выполнить запрос");
-//        });
-//        log.info("Запрос на удаление из друзей выполнен");
-//        return UserMapper.mapToUserDto(user);
-//    }
-//
+
 //    public Collection<UserDto> getCommonFriends(Long userId, Long userFriendId) {
 //        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
 //        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));

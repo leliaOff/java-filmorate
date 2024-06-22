@@ -35,4 +35,16 @@ public class DbUserFollowStorage implements UserFollowStorage {
     public void makeFriend(Long id, Long friendId) {
         userFollowRepository.makeFriend(id, friendId);
     }
+
+    public void leaveSubscription(Long id, Long friendId) {
+        userFollowRepository.leaveSubscription(id, friendId);
+    }
+
+    public void unsubscribe(Long id, Long friendId) {
+        userFollowRepository.unsubscribe(id, friendId);
+    }
+
+    public boolean isInitiator(Long id, Long friendId) {
+        return userFollowRepository.isInitiator(id, friendId);
+    }
 }

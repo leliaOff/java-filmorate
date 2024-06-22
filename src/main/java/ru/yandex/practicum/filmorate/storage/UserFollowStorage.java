@@ -14,4 +14,10 @@ public interface UserFollowStorage {
     void subscribe(Long id, Long friendId);
 
     void makeFriend(Long id, Long friendId);
+
+    void leaveSubscription(Long id, Long friendId);
+
+    void unsubscribe(Long id, Long friendId);
+
+    boolean isInitiator(Long id, Long friendId);
 }

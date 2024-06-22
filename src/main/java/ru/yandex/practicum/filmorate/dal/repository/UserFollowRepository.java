@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 public class UserFollowRepository extends BaseRepository<User> {
@@ -76,5 +77,43 @@ public class UserFollowRepository extends BaseRepository<User> {
                 "SET state = 1 " +
                 "WHERE following_user_id = ? " +
                 "AND followed_user_id = ?", id, friendId);
+    }
+
+    /**
+     * Оставить в подписчиках
+     *
+     * @param id       ИД пользователя
+     * @param friendId ИД пользователя-подписчика
+     */
+    public void leaveSubscription(Long id, Long friendId) {
+        update("UPDATE user_follows " +
+                "SET state = 0 " +
+                "WHERE following_user_id = ? " +
+                "AND followed_user_id = ?", id, friendId);
+    }
+
+    /**
+     * Отписаться
+     *
+     * @param id       ИД пользователя
+     * @param friendId ИД пользователя-подписчика
+     */
+    public void unsubscribe(Long id, Long friendId) {
+        delete("DELETE FROM user_follows " +
+                "WHERE following_user_id = ? " +
+                "AND followed_user_id = ?", id, friendId);
+    }
+
+    /**
+     * Является ли пользователь инициатором дружбы/подписки
+     *
+     * @param id       ИД пользователя
+     * @param friendId ИД пользователя-подписчика
+     */
+    public boolean isInitiator(Long id, Long friendId) {
+        Integer count = count("SELECT count(*) FROM user_follows " +
+                "WHERE following_user_id = ? " +
+                "AND followed_user_id = ?", id, friendId);
+        return count > 0;
     }
 }

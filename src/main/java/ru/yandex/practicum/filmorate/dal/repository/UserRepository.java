@@ -18,7 +18,7 @@ public class UserRepository extends BaseRepository<User> {
     }
 
     public Collection<User> get() {
-        return get("SELECT * FROM users JOIN user_follows");
+        return get("SELECT * FROM users");
     }
 
     public Optional<User> find(Long id) {
