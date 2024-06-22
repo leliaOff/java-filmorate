@@ -12,7 +12,8 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserFollowStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -135,9 +136,9 @@ public class UserFollowService {
     /**
      * Список общих друзей
      *
-     * @param userId        ИД пользователя
-     * @param userOtherId   ИД второго пользователя
-     * @return              Список
+     * @param userId      ИД пользователя
+     * @param userOtherId ИД второго пользователя
+     * @return Список
      */
     public Collection<UserDto> getCommonFriends(Long userId, Long userOtherId) {
         if (Objects.equals(userId, userOtherId)) {
