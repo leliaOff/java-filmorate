@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.storage;
 
-import helpers.Helper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.dal.repository.UserRepository;
@@ -9,7 +8,6 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 @Qualifier("dbUserStorage")
@@ -26,54 +24,35 @@ public class DbUserStorage implements UserStorage {
     }
 
     public Optional<User> find(Long id) {
-        return this.users.values()
-                .stream()
-                .filter(user -> user.getId().equals(id))
-                .findFirst();
+        return userRepository.find(id);
     }
 
-    public User create(User user) {
-        user.setId(Helper.nextId(users));
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> create(User user) {
         user.setName(user.getName() != null ? user.getName() : user.getLogin());
-        users.put(user.getId(), user);
-        return user;
+        return userRepository.create(user);
     }
 
     public Optional<User> update(Long id, User user) {
-        if (!users.containsKey(id)) {
-            return Optional.empty();
-        }
-        user.setName(user.getName() != null ? user.getName() : user.getLogin());
-        users.put(id, user);
-        return Optional.of(user);
+        return userRepository.update(user);
     }
 
-    public User subscribe(User user, User friend) {
-        user.getFollows().add(friend.getId());
-        friend.getFollows().add(user.getId());
-        return user;
+    public Optional<User> subscribe(User user, User friend) {
+        return userRepository.subscribe(user, friend);
     }
 
-    public User unsubscribe(User user, User friend) {
-        user.getFollows().remove(friend.getId());
-        friend.getFollows().remove(user.getId());
-        return user;
+    public Optional<User> unsubscribe(User user, User friend) {
+        return userRepository.unsubscribe(user, friend);
     }
 
     public Collection<User> getFriends(User user) {
-        return user.getFollows().stream()
-                .map(this::find)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+        return userRepository.getFriends(user.getId());
     }
 
     public Collection<User> getCommonFriends(User user, User friend) {
-        return user.getFollows().stream()
-                .filter(id -> friend.getFollows().contains(id))
-                .map(this::find)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+        return userRepository.getCommonFriends(user.getId(), friend.getId());
     }
 }

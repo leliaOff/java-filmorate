@@ -24,11 +24,18 @@ public class InMemoryUserStorage implements UserStorage {
                 .findFirst();
     }
 
-    public User create(User user) {
+    public Optional<User> findByEmail(String email) {
+        return this.users.values()
+                .stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst();
+    }
+
+    public Optional<User> create(User user) {
         user.setId(Helper.nextId(users));
         user.setName(user.getName() != null ? user.getName() : user.getLogin());
         users.put(user.getId(), user);
-        return user;
+        return Optional.of(user);
     }
 
     public Optional<User> update(Long id, User user) {
@@ -40,16 +47,16 @@ public class InMemoryUserStorage implements UserStorage {
         return Optional.of(user);
     }
 
-    public User subscribe(User user, User friend) {
+    public Optional<User> subscribe(User user, User friend) {
         user.getFollows().add(friend.getId());
         friend.getFollows().add(user.getId());
-        return user;
+        return Optional.of(user);
     }
 
-    public User unsubscribe(User user, User friend) {
+    public Optional<User> unsubscribe(User user, User friend) {
         user.getFollows().remove(friend.getId());
         friend.getFollows().remove(user.getId());
-        return user;
+        return Optional.of(user);
     }
 
     public Collection<User> getFriends(User user) {

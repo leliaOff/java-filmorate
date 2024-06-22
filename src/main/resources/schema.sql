@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS user_follows
     id bigint auto_increment,
     following_user_id bigint NOT NULL,
     followed_user_id bigint NOT NULL,
-    state smallint NOT NULL,
+    state smallint NOT NULL DEFAULT 0,
     created_at timestamp DEFAULT NOW() NOT NULL,
     CONSTRAINT user_follows_pk PRIMARY KEY (id),
     CONSTRAINT user_follows_following_users_id_fk FOREIGN KEY (following_user_id) REFERENCES USERS (id),

@@ -1,5 +1,6 @@
 package helpers;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 public final class Helper {
@@ -13,5 +14,9 @@ public final class Helper {
                 .max()
                 .orElse(0);
         return ++currentMaxId;
+    }
+
+    public static DateTimeFormatter getFormatter() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd");
     }
 }
