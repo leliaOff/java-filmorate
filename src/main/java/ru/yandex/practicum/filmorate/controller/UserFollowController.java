@@ -7,6 +7,8 @@ import ru.yandex.practicum.filmorate.dal.dto.UserDto;
 import ru.yandex.practicum.filmorate.service.UserFollowService;
 import ru.yandex.practicum.filmorate.service.UserService;
 
+import java.util.Collection;
+
 @RestController
 @Slf4j
 @RequestMapping("/users/{id}/friends")
@@ -32,8 +34,8 @@ public class UserFollowController {
         return userService.find(id);
     }
 
-//    @GetMapping("/{id}/friends/common/{otherId}")
-//    public Collection<UserDto> getCommonFriends(@PathVariable long id, @PathVariable long otherId) {
-//        return userService.getCommonFriends(id, otherId);
-//    }
+    @GetMapping("/common/{otherId}")
+    public Collection<UserDto> getCommonFriends(@PathVariable long id, @PathVariable long otherId) {
+        return userFollowService.getCommonFriends(id, otherId);
+    }
 }

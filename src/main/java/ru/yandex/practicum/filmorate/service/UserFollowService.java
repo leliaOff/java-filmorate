@@ -12,8 +12,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserFollowStorage;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,10 +79,7 @@ public class UserFollowService {
             log.error("Не удалось выполнить запрос: нельзя добавить в друзья самого себя");
             throw new InternalServerException("Не удалось выполнить запрос: нельзя добавить в друзья самого себя");
         }
-        User user = userStorage
-                .find(userId)
-                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-
+        User user = userStorage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
         User friend = userStorage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
 
         if (isFriend(user, friend)) {
@@ -114,10 +110,7 @@ public class UserFollowService {
             log.error("Не удалось выполнить запрос: нельзя удалить из друзей самого себя");
             throw new InternalServerException("Не удалось выполнить запрос: нельзя удалить из друзей самого себя");
         }
-        User user = userStorage
-                .find(userId)
-                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-
+        User user = userStorage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
         User friend = userStorage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
 
         if (isFriend(user, friend)) {
@@ -137,6 +130,27 @@ public class UserFollowService {
 
         log.error("Не удалось выполнить запрос: не является другом или подпиской");
         throw new InternalServerException("Не удалось выполнить запрос: не является другом или подпиской");
+    }
+
+    /**
+     * Список общих друзей
+     *
+     * @param userId        ИД пользователя
+     * @param userOtherId   ИД второго пользователя
+     * @return              Список
+     */
+    public Collection<UserDto> getCommonFriends(Long userId, Long userOtherId) {
+        if (Objects.equals(userId, userOtherId)) {
+            log.error("Не удалось выполнить запрос: нельзя просмотреть список общих друзей с самим собой");
+            throw new InternalServerException("Не удалось выполнить запрос: нельзя просмотреть список общих друзей с самим собой");
+        }
+        User user = userStorage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        User other = userStorage.find(userOtherId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        Collection<UserDto> userFriends = this.getFriends(user.getId());
+        Collection<UserDto> otherFriends = this.getFriends(other.getId());
+
+        return userFriends.stream().filter(otherFriends::contains).collect(Collectors.toList());
     }
 
     /**
@@ -162,15 +176,4 @@ public class UserFollowService {
         Collection<UserDto> subscriptions = this.getSubscriptions(user.getId());
         return subscriptions.stream().anyMatch(userDto -> userDto.getId().equals(friendUser.getId()));
     }
-
-
-//    public Collection<UserDto> getCommonFriends(Long userId, Long userFriendId) {
-//        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-//        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-//        return storage
-//                .getCommonFriends(user, friend)
-//                .stream()
-//                .map(UserMapper::mapToUserDto)
-//                .collect(Collectors.toList());
-//    }
 }
