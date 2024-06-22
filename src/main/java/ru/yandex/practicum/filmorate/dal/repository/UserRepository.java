@@ -18,7 +18,7 @@ public class UserRepository extends BaseRepository<User> {
     }
 
     public Collection<User> get() {
-        return get("SELECT * FROM users");
+        return get("SELECT * FROM users JOIN user_follows");
     }
 
     public Optional<User> find(Long id) {
@@ -59,39 +59,5 @@ public class UserRepository extends BaseRepository<User> {
             return Optional.empty();
         }
         return Optional.of(user);
-    }
-
-    public Optional<User> subscribe(User user, User friend) {
-        try {
-            create(
-                    "INSERT INTO user_follows(following_user_id, followed_user_id) VALUES (?, ?)",
-                    user.getId(),
-                    friend.getId()
-            );
-        } catch (InternalServerException exception) {
-            return Optional.empty();
-        }
-        return Optional.of(user);
-    }
-
-    public Optional<User> unsubscribe(User user, User friend) {
-        try {
-            delete(
-                    "DELETE FROM user_follows WHERE following_user_id = ? AND followed_user_id = ?",
-                    user.getId(),
-                    friend.getId()
-            );
-        } catch (InternalServerException exception) {
-            return Optional.empty();
-        }
-        return Optional.of(user);
-    }
-
-    public Collection<User> getFriends(Long id) {
-        return get("SELECT * FROM users WHERE id IN ((SELECT following_user_id FROM user_follows WHERE followed_user_id = ? AND state = 1) UNION) (SELECT followed_user_id FROM user_follows WHERE following_user_id = ? AND state = 1)", id, id);
-    }
-
-    public Collection<User> getCommonFriends(Long id, Long friendId) {
-        return get("SELECT * FROM users WHERE id IN ((SELECT following_user_id FROM user_follows WHERE followed_user_id = ? AND state = 1) UNION) (SELECT followed_user_id FROM user_follows WHERE following_user_id = ? AND state = 1)", id, id);
     }
 }

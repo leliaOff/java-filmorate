@@ -3,8 +3,8 @@ package ru.yandex.practicum.filmorate.dal.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 @Data
 public class UserDto {
@@ -13,5 +13,10 @@ public class UserDto {
     private String login;
     private String name;
     private LocalDate birthday;
-    private Set<Long> follows = new HashSet<>();
+    // Друзья
+    private Collection<UserDto> friends = new HashSet<>();
+    // Подписки
+    private Collection<UserDto> subscriptions = new HashSet<>();
+    // Подписчики
+    private Collection<UserDto> subscribers = new HashSet<>();
 }

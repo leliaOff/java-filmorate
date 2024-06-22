@@ -39,20 +39,4 @@ public class DbUserStorage implements UserStorage {
     public Optional<User> update(Long id, User user) {
         return userRepository.update(user);
     }
-
-    public Optional<User> subscribe(User user, User friend) {
-        return userRepository.subscribe(user, friend);
-    }
-
-    public Optional<User> unsubscribe(User user, User friend) {
-        return userRepository.unsubscribe(user, friend);
-    }
-
-    public Collection<User> getFriends(User user) {
-        return userRepository.getFriends(user.getId());
-    }
-
-    public Collection<User> getCommonFriends(User user, User friend) {
-        return userRepository.getCommonFriends(user.getId(), friend.getId());
-    }
 }

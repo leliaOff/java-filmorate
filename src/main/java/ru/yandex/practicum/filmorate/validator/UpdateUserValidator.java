@@ -6,6 +6,7 @@ import ru.yandex.practicum.filmorate.request.UpdateUserRequest;
 @Slf4j
 public class UpdateUserValidator extends BaseUserValidator {
     protected final UpdateUserRequest request;
+
     public UpdateUserValidator(UpdateUserRequest request) {
         super(request);
         this.request = request;

@@ -15,12 +15,4 @@ public interface UserStorage {
     Optional<User> create(User user);
 
     Optional<User> update(Long id, User user);
-
-    Optional<User> subscribe(User user, User friend);
-
-    Optional<User> unsubscribe(User user, User friend);
-
-    Collection<User> getFriends(User user);
-
-    Collection<User> getCommonFriends(User user, User friend);
 }

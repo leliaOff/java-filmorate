@@ -3,12 +3,11 @@ package ru.yandex.practicum.filmorate.validator;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.request.CreateUserRequest;
 
-import java.time.LocalDate;
-
 
 @Slf4j
 public class CreateUserValidator extends BaseUserValidator {
     protected final CreateUserRequest request;
+
     public CreateUserValidator(CreateUserRequest request) {
         super(request);
         this.request = request;

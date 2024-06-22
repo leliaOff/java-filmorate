@@ -24,8 +24,11 @@ public class UserService {
     @Qualifier("dbUserStorage")
     private final UserStorage storage;
 
+    private final UserFollowService userFollowService;
+
     @Autowired
-    UserService(@Qualifier("dbUserStorage") UserStorage storage) {
+    UserService(@Qualifier("dbUserStorage") UserStorage storage, UserFollowService userFollowService) {
+        this.userFollowService = userFollowService;
         this.storage = storage;
     }
 
@@ -34,6 +37,11 @@ public class UserService {
                 .getAll()
                 .stream()
                 .map(UserMapper::mapToUserDto)
+                .peek((UserDto dto) -> {
+                    dto.setFriends(userFollowService.getFriends(dto.getId()));
+                    dto.setSubscriptions(userFollowService.getSubscriptions(dto.getId()));
+                    dto.setSubscribers(userFollowService.getSubscribers(dto.getId()));
+                })
                 .collect(Collectors.toList());
     }
 
@@ -41,11 +49,16 @@ public class UserService {
         return storage
                 .find(id)
                 .map(UserMapper::mapToUserDto)
+                .map((UserDto dto) -> {
+                    dto.setFriends(userFollowService.getFriends(dto.getId()));
+                    dto.setSubscriptions(userFollowService.getSubscriptions(dto.getId()));
+                    dto.setSubscribers(userFollowService.getSubscribers(dto.getId()));
+                    return dto;
+                })
                 .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
     }
 
     public UserDto create(CreateUserRequest request) {
-        Optional<User> o = storage.findByEmail(request.getEmail());
         if (storage.findByEmail(request.getEmail()).isPresent()) {
             log.error("Не удалось создать пользователя: такой email существует");
             throw new InternalServerException("Не удалось создать пользователя: такой email уже существует");
@@ -77,51 +90,11 @@ public class UserService {
             return new NotFoundException("Пользователь не найден");
         });
         log.info("Пользователь изменен (ID={})", id);
-        return UserMapper.mapToUserDto(user);
-    }
 
-    public UserDto subscribe(Long userId, Long userFriendId) {
-        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        if (Objects.equals(userId, userFriendId)) {
-            log.error("Не удалось выполнить запрос: нельзя добавить в друзья самого себя");
-            throw new InternalServerException("Не удалось выполнить запрос: нельзя добавить в друзья самого себя");
-        }
-        user = storage.subscribe(user, friend).orElseThrow(() -> {
-            log.error("Не удалось выполнить запрос на добавление в друзья");
-            return new NotFoundException("Не удалось выполнить запрос");
-        });
-        log.info("Запрос на добавление у друзья выполнен");
-        return UserMapper.mapToUserDto(user);
-    }
-
-    public UserDto unsubscribe(Long userId, Long userFriendId) {
-        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        user = storage.unsubscribe(user, friend).orElseThrow(() -> {
-            log.error("Не удалось выполнить запрос на удаление из друзей");
-            return new NotFoundException("Не удалось выполнить запрос");
-        });
-        log.info("Запрос на удаление из друзей выполнен");
-        return UserMapper.mapToUserDto(user);
-    }
-
-    public Collection<UserDto> getFriends(Long userId) {
-        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        return storage
-                .getFriends(user)
-                .stream()
-                .map(UserMapper::mapToUserDto)
-                .collect(Collectors.toList());
-    }
-
-    public Collection<UserDto> getCommonFriends(Long userId, Long userFriendId) {
-        User user = storage.find(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        User friend = storage.find(userFriendId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        return storage
-                .getCommonFriends(user, friend)
-                .stream()
-                .map(UserMapper::mapToUserDto)
-                .collect(Collectors.toList());
+        UserDto dto = UserMapper.mapToUserDto(user);
+        dto.setFriends(userFollowService.getFriends(dto.getId()));
+        dto.setSubscriptions(userFollowService.getSubscriptions(dto.getId()));
+        dto.setSubscribers(userFollowService.getSubscribers(dto.getId()));
+        return dto;
     }
 }
