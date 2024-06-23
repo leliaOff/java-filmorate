@@ -17,7 +17,7 @@ public class CreateFilmTest {
         request.setName("name");
         request.setDescription("description");
         request.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
-        request.setDuration( 100);
+        request.setDuration(100);
         CreateFilmValidator validator = new CreateFilmValidator(request);
         validator.validate();
         Assertions.assertTrue(validator.isValid());
@@ -28,7 +28,7 @@ public class CreateFilmTest {
         CreateFilmRequest request = new CreateFilmRequest();
         request.setDescription("description");
         request.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
-        request.setDuration( 100);
+        request.setDuration(100);
         CreateFilmValidator validator = new CreateFilmValidator(request);
         validator.validate();
         Assertions.assertFalse(validator.isValid());
@@ -40,7 +40,7 @@ public class CreateFilmTest {
         request.setName("name");
         request.setDescription("description description description description description description description description description description description description description description description description descrip");
         request.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
-        request.setDuration( 100);
+        request.setDuration(100);
         CreateFilmValidator validator = new CreateFilmValidator(request);
         validator.validate();
         Assertions.assertTrue(validator.isValid());
@@ -52,7 +52,7 @@ public class CreateFilmTest {
         request.setName("name");
         request.setDescription("description description description description description description description description description description description description description description description description description");
         request.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
-        request.setDuration( 100);
+        request.setDuration(100);
         CreateFilmValidator validator = new CreateFilmValidator(request);
         validator.validate();
         Assertions.assertFalse(validator.isValid());
@@ -76,7 +76,7 @@ public class CreateFilmTest {
         request.setName("name");
         request.setDescription("description");
         request.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
-        request.setDuration(- 100);
+        request.setDuration(-100);
         CreateFilmValidator validator = new CreateFilmValidator(request);
         validator.validate();
         Assertions.assertFalse(validator.isValid());
@@ -88,7 +88,7 @@ public class CreateFilmTest {
         request.setName("name");
         request.setDescription("description");
         request.setReleaseDate(LocalDate.parse("1895-12-28", formatter));
-        request.setDuration( 100);
+        request.setDuration(100);
         CreateFilmValidator validator = new CreateFilmValidator(request);
         validator.validate();
         Assertions.assertTrue(validator.isValid());
@@ -100,7 +100,7 @@ public class CreateFilmTest {
         request.setName("name");
         request.setDescription("description");
         request.setReleaseDate(LocalDate.parse("1895-12-27", formatter));
-        request.setDuration( 100);
+        request.setDuration(100);
         CreateFilmValidator validator = new CreateFilmValidator(request);
         validator.validate();
         Assertions.assertFalse(validator.isValid());
