@@ -86,6 +86,6 @@ public class FilmRepository extends BaseRepository<Film> {
         } catch (InternalServerException exception) {
             return Optional.empty();
         }
-        return Optional.of(film);
+        return this.find(film.getId());
     }
 }

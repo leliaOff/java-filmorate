@@ -36,12 +36,12 @@ public class FilmMapper {
     public static Film updateFilmRequestToFilm(UpdateFilmRequest request, Film currentFilm) {
         Film film = new Film();
         film.setId(request.getId());
-        film.setName(request.getName());
-        film.setDescription(request.getDescription());
-        film.setReleaseDate(request.getReleaseDate());
-        film.setDuration(request.getDuration());
-        film.setGenreId(request.getGenreId());
-        film.setRatingId(request.getRatingId());
+        film.setName(request.getName() != null ? request.getName() : currentFilm.getName());
+        film.setDescription(request.getDescription() != null ? request.getDescription() : currentFilm.getDescription());
+        film.setReleaseDate(request.getReleaseDate() != null ? request.getReleaseDate() : currentFilm.getReleaseDate());
+        film.setDuration(request.getDuration() != null ? request.getDuration() : currentFilm.getDuration());
+        film.setGenreId(request.getGenreId() != null ? request.getGenreId() : currentFilm.getGenreId());
+        film.setRatingId(request.getRatingId() != null ? request.getRatingId() : currentFilm.getRatingId());
         return film;
     }
 }
