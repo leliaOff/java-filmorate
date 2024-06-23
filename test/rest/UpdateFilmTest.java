@@ -3,6 +3,7 @@ package rest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.request.UpdateFilmRequest;
 import ru.yandex.practicum.filmorate.validator.UpdateFilmValidator;
 
 import java.time.LocalDate;
@@ -13,25 +14,25 @@ public class UpdateFilmTest {
 
     @Test
     void valid() {
-        Film film = new Film();
-        film.setId(1L);
-        film.setName("name");
-        film.setDescription("description");
-        film.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
-        film.setDuration(100L);
-        UpdateFilmValidator validator = new UpdateFilmValidator(film);
+        UpdateFilmRequest request = new  UpdateFilmRequest();
+         request.setId(1L);
+         request.setName("name");
+         request.setDescription("description");
+         request.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
+         request.setDuration(100);
+        UpdateFilmValidator validator = new UpdateFilmValidator( request);
         validator.validate();
         Assertions.assertTrue(validator.isValid());
     }
 
     @Test
     void emptyId() {
-        Film film = new Film();
-        film.setName("name");
-        film.setDescription("description");
-        film.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
-        film.setDuration(100L);
-        UpdateFilmValidator validator = new UpdateFilmValidator(film);
+         UpdateFilmRequest  request = new  UpdateFilmRequest();
+         request.setName("name");
+         request.setDescription("description");
+         request.setReleaseDate(LocalDate.parse("2013-01-01", formatter));
+         request.setDuration(100);
+        UpdateFilmValidator validator = new UpdateFilmValidator( request);
         validator.validate();
         Assertions.assertFalse(validator.isValid());
     }

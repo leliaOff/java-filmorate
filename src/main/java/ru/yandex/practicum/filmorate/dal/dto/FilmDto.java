@@ -1,22 +1,19 @@
-package ru.yandex.practicum.filmorate.model;
+package ru.yandex.practicum.filmorate.dal.dto;
 
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
 
-/**
- * Film.
- */
 @Data
-public class Film {
+public class FilmDto {
     private Long id;
     private String name;
     private String description;
     private LocalDate releaseDate;
     private Integer duration;
-    private Long genreId;
     private String genre;
-    private Long ratingId;
     private String rating;
     private Integer userRating;
 }

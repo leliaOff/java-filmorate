@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.dal.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,6 +16,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Slf4j
 public class BaseRepository<T> {
     protected final JdbcTemplate jdbc;
     protected final RowMapper<T> mapper;
@@ -24,7 +26,7 @@ public class BaseRepository<T> {
      *
      * @param query  Запрос
      * @param params Параметры запроса
-     * @return
+     * @return       Список
      */
     protected Collection<T> get(String query, Object... params) {
         return jdbc.query(query, mapper, params);

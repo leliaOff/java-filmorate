@@ -12,7 +12,6 @@ import java.util.Optional;
 @Component
 @Qualifier("dbUserStorage")
 public class DbUserStorage implements UserStorage {
-    private final HashMap<Long, User> users = new HashMap<>();
     private final UserRepository userRepository;
 
     public DbUserStorage(UserRepository userRepository) {
