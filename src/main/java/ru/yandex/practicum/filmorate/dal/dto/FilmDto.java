@@ -3,8 +3,6 @@ package ru.yandex.practicum.filmorate.dal.dto;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
 
 @Data
 public class FilmDto {

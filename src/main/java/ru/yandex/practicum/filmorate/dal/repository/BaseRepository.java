@@ -26,7 +26,7 @@ public class BaseRepository<T> {
      *
      * @param query  Запрос
      * @param params Параметры запроса
-     * @return       Список
+     * @return Список
      */
     protected Collection<T> get(String query, Object... params) {
         return jdbc.query(query, mapper, params);
