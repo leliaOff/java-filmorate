@@ -56,14 +56,4 @@ public class FilmController {
         }
         return filmService.update(request);
     }
-//
-//    @PutMapping("/{id}/like/{userId}")
-//    public Film vote(@PathVariable long id, @PathVariable long userId) {
-//        return filmService.vote(id, userId);
-//    }
-//
-//    @DeleteMapping("/{id}/like/{userId}")
-//    public Film unvote(@PathVariable long id, @PathVariable long userId) {
-//        return filmService.unvote(id, userId);
-//    }
 }

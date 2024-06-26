@@ -33,7 +33,7 @@ public class FilmUserRatingRepository extends BaseRepository<User> {
      * @param userId ИД пользователя
      */
     public void vote(Long filmId, Long userId) {
-        update("INSERT INTO film_user_ratings(film_id, user_id) " +
+        update("MERGE INTO film_user_ratings(film_id, user_id) KEY (film_id, user_id)" +
                 "VALUES (?, ?)", filmId, userId);
     }
 

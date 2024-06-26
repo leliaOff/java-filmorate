@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.dal.dto.UserDto;
-import ru.yandex.practicum.filmorate.exception.InternalServerException;
 import ru.yandex.practicum.filmorate.mapper.UserMapper;
 import ru.yandex.practicum.filmorate.storage.FilmUserRatingStorage;
 
@@ -43,10 +42,6 @@ public class FilmUserRatingService {
      * @param userId ИД пользователя, который голосует за фильм
      */
     public void vote(Long filmId, Long userId) {
-        if (this.getUsers(filmId).stream().anyMatch(user -> user.getId().equals(userId))) {
-            log.error("Не удалось выполнить запрос: пользователь уже оставил свой голос за этот фильм");
-            throw new InternalServerException("Не удалось выполнить запрос: пользователь уже оставил свой голос за этот фильм");
-        }
         filmUserRatingStorage.vote(filmId, userId);
     }
 
@@ -57,10 +52,6 @@ public class FilmUserRatingService {
      * @param userId ИД пользователя, который отзывает голос
      */
     public void recall(Long filmId, Long userId) {
-        if (this.getUsers(filmId).stream().filter(user -> user.getId().equals(userId)).findFirst().isEmpty()) {
-            log.error("Не удалось выполнить запрос: пользователь не голосовал за фильм");
-            throw new InternalServerException("Не удалось выполнить запрос: пользователь не голосовал за фильм");
-        }
         filmUserRatingStorage.recall(filmId, userId);
     }
 }
