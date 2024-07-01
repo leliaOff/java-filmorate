@@ -58,7 +58,7 @@ public class FilmRepository extends BaseRepository<Film> {
                     film.getDescription(),
                     film.getReleaseDate().format(Helper.getFormatter()),
                     film.getDuration(),
-                    film.getRatingId()
+                    film.getRating().getId()
             );
             film.setId(id);
         } catch (InternalServerException exception) {
@@ -75,7 +75,7 @@ public class FilmRepository extends BaseRepository<Film> {
                     film.getDescription(),
                     film.getReleaseDate().format(Helper.getFormatter()),
                     film.getDuration(),
-                    film.getRatingId(),
+                    film.getRating().getId(),
                     film.getId()
             );
         } catch (InternalServerException exception) {

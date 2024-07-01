@@ -18,14 +18,10 @@ public class FilmMapper {
         dto.setDescription(film.getDescription());
         dto.setReleaseDate(film.getReleaseDate());
         dto.setDuration(film.getDuration());
-        if (film.getRating() != null || film.getRatingId() != null) {
+        if (film.getRating() != null) {
             MpaDto mpaDto = new MpaDto();
-            if (film.getRating() != null) {
-                mpaDto.setName(film.getRating());
-            }
-            if (film.getRatingId() != null) {
-                mpaDto.setId(film.getRatingId());
-            }
+            mpaDto.setName(film.getRating().getName());
+            mpaDto.setId(film.getRating().getId());
             dto.setMpa(mpaDto);
         }
         dto.setUserRating(film.getUserRating());
@@ -39,7 +35,10 @@ public class FilmMapper {
         film.setReleaseDate(request.getReleaseDate());
         film.setDuration(request.getDuration());
         if (request.getMpa().getId() != null) {
-            film.setRatingId(request.getMpa().getId());
+            Rating rating = new Rating();
+            rating.setId(request.getMpa().getId());
+            rating.setName(request.getMpa().getName());
+            film.setRating(rating);
         }
         return film;
     }
@@ -52,7 +51,10 @@ public class FilmMapper {
         film.setReleaseDate(request.getReleaseDate() != null ? request.getReleaseDate() : currentFilm.getReleaseDate());
         film.setDuration(request.getDuration() != null ? request.getDuration() : currentFilm.getDuration());
         if (request.getMpa().getId() != null) {
-            film.setRatingId(request.getMpa().getId());
+            Rating rating = new Rating();
+            rating.setId(request.getMpa().getId());
+            rating.setName(request.getMpa().getName());
+            film.setRating(rating);
         }
         return film;
     }
