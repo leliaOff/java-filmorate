@@ -11,5 +11,5 @@ public class BaseFilmRequest {
     private LocalDate releaseDate;
     private Integer duration;
     private Long genreId;
-    private Long ratingId;
+    private BaseMpaRequest mpa;
 }

@@ -3,7 +3,9 @@ package ru.yandex.practicum.filmorate.mapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import ru.yandex.practicum.filmorate.dal.dto.FilmDto;
+import ru.yandex.practicum.filmorate.dal.dto.MpaDto;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Rating;
 import ru.yandex.practicum.filmorate.request.CreateFilmRequest;
 import ru.yandex.practicum.filmorate.request.UpdateFilmRequest;
 
@@ -17,7 +19,16 @@ public class FilmMapper {
         dto.setReleaseDate(film.getReleaseDate());
         dto.setDuration(film.getDuration());
         dto.setGenre(film.getGenre());
-        dto.setRating(film.getRating());
+        if (film.getRating() != null || film.getRatingId() != null) {
+            MpaDto mpaDto = new MpaDto();
+            if (film.getRating() != null) {
+                mpaDto.setName(film.getRating());
+            }
+            if (film.getRatingId() != null) {
+                mpaDto.setId(film.getRatingId());
+            }
+            dto.setMpa(mpaDto);
+        }
         dto.setUserRating(film.getUserRating());
         return dto;
     }
@@ -29,7 +40,9 @@ public class FilmMapper {
         film.setReleaseDate(request.getReleaseDate());
         film.setDuration(request.getDuration());
         film.setGenreId(request.getGenreId());
-        film.setRatingId(request.getRatingId());
+        if (request.getMpa().getId() != null) {
+            film.setRatingId(request.getMpa().getId());
+        }
         return film;
     }
 
@@ -41,7 +54,9 @@ public class FilmMapper {
         film.setReleaseDate(request.getReleaseDate() != null ? request.getReleaseDate() : currentFilm.getReleaseDate());
         film.setDuration(request.getDuration() != null ? request.getDuration() : currentFilm.getDuration());
         film.setGenreId(request.getGenreId() != null ? request.getGenreId() : currentFilm.getGenreId());
-        film.setRatingId(request.getRatingId() != null ? request.getRatingId() : currentFilm.getRatingId());
+        if (request.getMpa().getId() != null) {
+            film.setRatingId(request.getMpa().getId());
+        }
         return film;
     }
 }

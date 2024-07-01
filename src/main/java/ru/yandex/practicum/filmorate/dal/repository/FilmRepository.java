@@ -18,7 +18,7 @@ public class FilmRepository extends BaseRepository<Film> {
     }
 
     public Collection<Film> get() {
-        return get("SELECT films.*, genres.name as genre, ratings.name as rating, film_user_ratings_count.user_rating as user_rating " +
+        return get("SELECT films.*, genres.name as genre, ratings.id as rating_id, ratings.name as rating_name, film_user_ratings_count.user_rating as user_rating " +
                 "FROM films " +
                 "JOIN genres ON genres.id = films.genre_id " +
                 "JOIN ratings ON ratings.id = films.rating_id " +
@@ -29,7 +29,7 @@ public class FilmRepository extends BaseRepository<Film> {
     }
 
     public Collection<Film> getPopular(Integer count) {
-        return get("SELECT films.*, genres.name as genre, ratings.name as rating, film_user_ratings_count.user_rating as user_rating " +
+        return get("SELECT films.*, genres.name as genre, ratings.id as rating_id, ratings.name as rating_name, film_user_ratings_count.user_rating as user_rating " +
                 "FROM films " +
                 "JOIN genres ON genres.id = films.genre_id " +
                 "JOIN ratings ON ratings.id = films.rating_id " +
@@ -42,7 +42,7 @@ public class FilmRepository extends BaseRepository<Film> {
     }
 
     public Optional<Film> find(Long id) {
-        return find("SELECT films.*, genres.name as genre, ratings.name as rating, film_user_ratings_count.user_rating as user_rating " +
+        return find("SELECT films.*, genres.name as genre, ratings.id as rating_id, ratings.name as rating_name, film_user_ratings_count.user_rating as user_rating " +
                 "FROM films " +
                 "JOIN genres ON genres.id = films.genre_id " +
                 "JOIN ratings ON ratings.id = films.rating_id " +
