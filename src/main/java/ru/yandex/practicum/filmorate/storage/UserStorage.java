@@ -10,15 +10,9 @@ public interface UserStorage {
 
     Optional<User> find(Long id);
 
-    User create(User user);
+    Optional<User> findByEmail(String email);
+
+    Optional<User> create(User user);
 
     Optional<User> update(Long id, User user);
-
-    User subscribe(User user, User friend);
-
-    User unsubscribe(User user, User friend);
-
-    Collection<User> getFriends(User user);
-
-    Collection<User> getCommonFriends(User user, User friend);
 }
