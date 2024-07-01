@@ -22,6 +22,14 @@ public class UserFollowController {
         this.userFollowService = userFollowService;
     }
 
+    @GetMapping()
+    public Collection<UserDto> getFriends(@PathVariable long id) {
+        Collection<UserDto> friends = userFollowService.getFriends(id);
+        Collection<UserDto> subscriptions = userFollowService.getSubscriptions(id);
+        friends.addAll(subscriptions);
+        return friends;
+    }
+
     @PutMapping("/{friendId}")
     public UserDto subscribe(@PathVariable long id, @PathVariable long friendId) {
         userFollowService.subscribe(id, friendId);

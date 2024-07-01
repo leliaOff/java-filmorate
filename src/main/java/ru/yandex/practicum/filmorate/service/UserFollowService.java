@@ -37,6 +37,7 @@ public class UserFollowService {
      * @return Список друзей и подписок пользователя
      */
     public Collection<UserDto> getFriends(Long id) {
+        userStorage.find(id).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
         return storage.getFriends(id)
                 .stream()
                 .map(UserMapper::mapToUserDto)
@@ -50,6 +51,7 @@ public class UserFollowService {
      * @return Список друзей и подписок пользователя
      */
     public Collection<UserDto> getSubscriptions(Long id) {
+        userStorage.find(id).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
         return storage.getSubscriptions(id)
                 .stream()
                 .map(UserMapper::mapToUserDto)
@@ -63,6 +65,7 @@ public class UserFollowService {
      * @return Список друзей и подписок пользователя
      */
     public Collection<UserDto> getSubscribers(Long id) {
+        userStorage.find(id).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
         return storage.getSubscribers(id)
                 .stream()
                 .map(UserMapper::mapToUserDto)
@@ -121,16 +124,9 @@ public class UserFollowService {
             } else {
                 storage.leaveSubscription(userFriendId, userId);
             }
-            return;
-        }
-
-        if (isSubscription(user, friend)) {
+        } else if (isSubscription(user, friend)) {
             storage.unsubscribe(userId, userFriendId);
-            return;
         }
-
-        log.error("Не удалось выполнить запрос: не является другом или подпиской");
-        throw new InternalServerException("Не удалось выполнить запрос: не является другом или подпиской");
     }
 
     /**
@@ -149,7 +145,12 @@ public class UserFollowService {
         User other = userStorage.find(userOtherId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
 
         Collection<UserDto> userFriends = this.getFriends(user.getId());
+        Collection<UserDto> userSubscriptions = this.getSubscriptions(user.getId());
+        userFriends.addAll(userSubscriptions);
+
         Collection<UserDto> otherFriends = this.getFriends(other.getId());
+        Collection<UserDto> otherSubscriptions = this.getSubscriptions(other.getId());
+        otherFriends.addAll(otherSubscriptions);
 
         return userFriends.stream().filter(otherFriends::contains).collect(Collectors.toList());
     }
