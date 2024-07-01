@@ -14,8 +14,6 @@ public class Film {
     private String description;
     private LocalDate releaseDate;
     private Integer duration;
-    private Long genreId;
-    private String genre;
     private Long ratingId;
     private String rating;
     private Integer userRating;
