@@ -6,6 +6,7 @@ import ru.yandex.practicum.filmorate.dal.repository.RatingRepository;
 import ru.yandex.practicum.filmorate.model.Rating;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Component
 @Qualifier("dbRatingStorage")
@@ -18,5 +19,9 @@ public class DbRatingStorage implements RatingStorage {
 
     public Collection<Rating> getAll() {
         return ratingRepository.get();
+    }
+
+    public Optional<Rating> find(Long id) {
+        return ratingRepository.find(id);
     }
 }

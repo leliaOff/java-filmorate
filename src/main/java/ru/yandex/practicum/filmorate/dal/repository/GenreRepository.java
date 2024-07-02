@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.model.Genre;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 public class GenreRepository extends BaseRepository<Genre> {
@@ -16,5 +17,9 @@ public class GenreRepository extends BaseRepository<Genre> {
 
     public Collection<Genre> get() {
         return get("SELECT * FROM genres");
+    }
+
+    public Optional<Genre> find(Long id) {
+        return find("SELECT * FROM genres WHERE id = ?", id);
     }
 }

@@ -6,6 +6,7 @@ import ru.yandex.practicum.filmorate.dal.repository.GenreRepository;
 import ru.yandex.practicum.filmorate.model.Genre;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Component
 @Qualifier("dbGenreStorage")
@@ -18,5 +19,9 @@ public class DbGenreStorage implements GenreStorage {
 
     public Collection<Genre> getAll() {
         return genreRepository.get();
+    }
+
+    public Optional<Genre> find(Long id) {
+        return genreRepository.find(id);
     }
 }
