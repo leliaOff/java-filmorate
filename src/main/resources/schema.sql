@@ -1,3 +1,17 @@
+DROP TABLE FILM_GENRES CASCADE;
+
+DROP TABLE FILM_USER_RATINGS CASCADE;
+
+DROP TABLE FILMS CASCADE;
+
+DROP TABLE GENRES CASCADE;
+
+DROP TABLE RATINGS CASCADE;
+
+DROP TABLE USER_FOLLOWS CASCADE;
+
+DROP TABLE USERS CASCADE;
+
 CREATE TABLE IF NOT EXISTS genres
 (
     id bigint auto_increment,
@@ -19,12 +33,20 @@ CREATE TABLE IF NOT EXISTS films
     description text,
     release_date date,
     duration integer,
-    genre_id bigint,
     rating_id bigint,
     created_at timestamp DEFAULT NOW() NOT NULL,
     CONSTRAINT films_pk PRIMARY KEY (id),
-    CONSTRAINT films_genres_id_fk FOREIGN KEY (genre_id) REFERENCES GENRES (id),
     CONSTRAINT films_ratings_id_fk FOREIGN KEY (rating_id) REFERENCES RATINGS (id)
+);
+
+CREATE TABLE IF NOT EXISTS film_genres
+(
+    id bigint auto_increment,
+    film_id bigint NOT NULL,
+    genre_id bigint NOT NULL,
+    CONSTRAINT film_genres_pk PRIMARY KEY (id),
+    CONSTRAINT film_genres_films_id_fk FOREIGN KEY (film_id) REFERENCES FILMS (id),
+    CONSTRAINT film_genres_genres_id_fk FOREIGN KEY (genre_id) REFERENCES GENRES (id)
 );
 
 CREATE TABLE IF NOT EXISTS users

@@ -2,10 +2,7 @@ package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.dal.dto.FilmDto;
 import ru.yandex.practicum.filmorate.dal.dto.UserDto;
 import ru.yandex.practicum.filmorate.service.FilmService;
@@ -31,13 +28,13 @@ public class FilmUserRatingController {
         return filmUserRatingService.getUsers(id);
     }
 
-    @GetMapping("/vote/{userId}")
+    @PutMapping("/like/{userId}")
     public FilmDto vote(@PathVariable long id, @PathVariable long userId) {
         filmUserRatingService.vote(id, userId);
         return filmService.find(id);
     }
 
-    @GetMapping("/recall/{userId}")
+    @DeleteMapping("/like/{userId}")
     public FilmDto recall(@PathVariable long id, @PathVariable long userId) {
         filmUserRatingService.recall(id, userId);
         return filmService.find(id);

@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.request;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 @Data
 public class BaseFilmRequest {
@@ -11,4 +12,5 @@ public class BaseFilmRequest {
     private LocalDate releaseDate;
     private Integer duration;
     private BaseMpaRequest mpa;
+    private Collection<BaseGenreRequest> genres;
 }
