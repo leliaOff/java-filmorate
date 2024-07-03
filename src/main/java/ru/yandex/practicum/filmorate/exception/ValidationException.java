@@ -6,7 +6,12 @@ import java.util.ArrayList;
 
 @Getter
 public class ValidationException extends RuntimeException {
-    private ArrayList<String> errors;
+    private final ArrayList<String> errors;
+
+    public ValidationException(String message) {
+        super(message);
+        this.errors = new ArrayList<>();
+    }
 
     public ValidationException(String message, ArrayList<String> errors) {
         super(message);

@@ -2,6 +2,17 @@ spring:
   output:
     ansi:
       enabled: "ALWAYS"
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:h2:file:./db/filmorate
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
 
 logging.level:
   ru.yandex.practicum.filmorate: TRACE
